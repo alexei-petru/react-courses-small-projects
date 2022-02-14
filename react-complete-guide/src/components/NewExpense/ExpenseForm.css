@@ -1,0 +1,34 @@
+.new-expense__controls {
+}
+
+.new-expense__control {
+  display: inline-block;
+}
+
+.new-expense__control input {
+  padding: 0.4rem;
+  width: 18rem;
+  border-radius: 0.3rem;
+}
+
+.new-expense__control label {
+  display: block;
+}
+
+.new-expense__control:nth-child(2) {
+  margin-left: 1rem;
+}
+.new-expense__control:nth-child(3) {
+  display: block;
+  flex-wrap: nowrap;
+  margin-top: 0.5rem;
+}
+.new-expense__actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.new-expense__actions button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+}

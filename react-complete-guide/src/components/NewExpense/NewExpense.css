@@ -1,0 +1,9 @@
+.new-expense {
+  display: flex;
+  padding: 1.2rem;
+  background-color: rgb(136, 120, 180);
+  width: 50rem;
+  max-width: 95%;
+  border-radius: 0.7rem;
+  margin: 3rem auto 0;
+}
