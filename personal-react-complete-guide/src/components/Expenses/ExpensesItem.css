@@ -1,0 +1,20 @@
+.expenses-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  margin: 1rem 0;
+  background-color: gray;
+}
+.expenses-item__title {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.expenses-item__price {
+  color: white;
+  border: 1px solid white;
+  background-color: purple;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
