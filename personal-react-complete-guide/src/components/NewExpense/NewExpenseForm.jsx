@@ -5,7 +5,9 @@ import ButtonDefault from "../UI/ButtonDefault";
 const NewExpenseForm = (props) => {
   const [enteredTitle, setEnteredTitle] = useState("");
   const [enteredAmount, setEnteredAmount] = useState("");
-  const [enteredDate, setEnteredDate] = useState("");
+  const [enteredDate, setEnteredDate] = useState(
+    new Date().toISOString().split("T")[0]
+  );
 
   const titleChangeHandler = (event) => {
     setEnteredTitle(event.target.value);
@@ -17,15 +19,23 @@ const NewExpenseForm = (props) => {
 
   const dateChangeHandler = (event) => {
     setEnteredDate(event.target.value);
+    console.log(event.target.value);
   };
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
 
+    if (
+      enteredTitle.trim() === "" ||
+      enteredAmount.trim() === "" ||
+      enteredDate.trim() === ""
+    )
+      return;
+
     const formValues = {
       title: enteredTitle,
-      amount: enteredAmount,
-      date: enteredDate,
+      price: +enteredAmount,
+      date: new Date(enteredDate),
     };
 
     setEnteredTitle("");
@@ -33,6 +43,10 @@ const NewExpenseForm = (props) => {
     setEnteredDate("");
 
     props.onSaveExpenseData(formValues);
+  };
+
+  const cancelPressHandler = () => {
+    props.onCancelPress();
   };
 
   return (
@@ -44,6 +58,7 @@ const NewExpenseForm = (props) => {
             onChange={titleChangeHandler}
             value={enteredTitle}
             type="text"
+            required
           />
         </div>
         <div className="new-expense__control">
@@ -52,6 +67,7 @@ const NewExpenseForm = (props) => {
             type="number"
             value={enteredAmount}
             onChange={amountChangeHandler}
+            required
           />
         </div>
         <div className="new-expense__control">
@@ -59,7 +75,13 @@ const NewExpenseForm = (props) => {
           <input type="date" value={enteredDate} onChange={dateChangeHandler} />
         </div>
         <div className="new-expense__control">
-          <ButtonDefault>Add Expense</ButtonDefault>
+          <ButtonDefault
+            onClick={cancelPressHandler}
+            style={{ marginRight: "1rem" }}
+          >
+            Cancel
+          </ButtonDefault>
+          <ButtonDefault type={"submit"}>Add Expense</ButtonDefault>
         </div>
       </div>
     </form>
