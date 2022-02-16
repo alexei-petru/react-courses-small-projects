@@ -25,7 +25,7 @@ function App() {
   ];
 
   const addExpenseHandler = (newExpenseData) => {
-    console.log(newExpenseData);
+    console.log(expenses);
   };
 
   return (
@@ -37,3 +37,6 @@ function App() {
 }
 
 export default App;
+
+
+//make available all in the first place and filter by the year using state mby

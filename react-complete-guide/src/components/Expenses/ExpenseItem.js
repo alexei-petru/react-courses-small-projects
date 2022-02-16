@@ -11,14 +11,16 @@ function ExpenseItem(props) {
   };
 
   return (
-    <Card className="expense-item">
-      <ExpenseDate date={props.date} />
-      <div className="expense-item__description">
-        <h2>{curTitle}</h2>
-        <Card className="expense-item__price">${props.amount}</Card>
-      </div>
-      <button onClick={changeTitle}>Change Title</button>
-    </Card>
+    <li>
+      <Card className="expense-item">
+        <ExpenseDate date={props.date} />
+        <div className="expense-item__description">
+          <h2>{curTitle}</h2>
+          <Card className="expense-item__price">${props.amount}</Card>
+        </div>
+        <button onClick={changeTitle}>Change Title</button>
+      </Card>
+    </li>
   );
 }
 

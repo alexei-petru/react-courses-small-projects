@@ -18,17 +18,26 @@
 .new-expense__control:nth-child(2) {
   margin-left: 1rem;
 }
+
 .new-expense__control:nth-child(3) {
   display: block;
   flex-wrap: nowrap;
   margin-top: 0.5rem;
 }
-.new-expense__actions {
+
+.new-expense__button-wrapper {
   display: flex;
   justify-content: flex-end;
 }
-.new-expense__actions button {
-  padding: 0.5rem;
-  border-radius: 0.5rem;
+
+.new-expense button {
+  padding: 1rem 1.5rem;
+  border-radius: 0.7rem;
+  background-color: rgb(66, 27, 102);
+  color: white;
   font-weight: bold;
+}
+
+.new-expense__button-wrapper button {
+  margin-left: 0.5rem;
 }

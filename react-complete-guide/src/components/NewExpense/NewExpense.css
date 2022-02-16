@@ -7,3 +7,10 @@
   border-radius: 0.7rem;
   margin: 3rem auto 0;
 }
+
+
+.new-expense__add-button-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
