@@ -1,0 +1,15 @@
+.to-do__not-found {
+  font-size: 2rem;
+  color: rgb(255, 255, 255);
+  background-color: rgba(192, 192, 192, 0.349);
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 2px 2px 3px rgb(0, 0, 0, 67%);
+  /* box-shadow: rgba(223, 94, 94, 0.25) 0px 30px 60px -12px inset,
+    rgba(255, 0, 0, 0.3) 0px 18px 36px -18px inset; */
+}
+
+.to-do__not-found-wrapper {
+  display: flex;
+  justify-content: center;
+}
