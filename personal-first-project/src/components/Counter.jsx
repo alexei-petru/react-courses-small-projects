@@ -17,7 +17,7 @@ function Counter() {
 
   return (
     <div className={classes.counter}>
-      <h2 className={classes["counter-title"]}>Counter</h2>
+      <h2 className={classes["counter-title"]}>Max 121</h2>
       <div className={classes["counter-number"]}>{state.count}</div>
       <div className={classes["buttons-wrapper"]}>
         <button onClick={() => dispatch({ type: "decr" })}>Decrement</button>
