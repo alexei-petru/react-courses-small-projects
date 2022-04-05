@@ -1,0 +1,10 @@
+.button {
+  padding: 5px 7px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: blue
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
