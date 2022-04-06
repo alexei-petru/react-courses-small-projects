@@ -1,0 +1,38 @@
+.backdrop {
+  height: 100vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.912);
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+.modal {
+  margin-top: 30vh;
+  height: 200px;
+  width: 300px;
+  z-index: 20;
+}
+
+.modal header {
+  height: 20%;
+  background-color: rgb(116, 27, 116);
+}
+
+.error-message_wrapper {
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message {
+}
+
+.modal footer {
+  display: flex;
+  justify-content: center;
+}
