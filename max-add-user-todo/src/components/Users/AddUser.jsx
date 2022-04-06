@@ -1,21 +1,15 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import ReactDOM from "react-dom";
 import Button from "../UI/Button";
 import Card from "../UI/Card";
 import ErrorModal from "../UI/ErrorModal";
 import classes from "./AddUser.module.css";
 
 const AddUser = (props) => {
-  const [enteredUsername, setEnteredUsername] = useState("");
-  const [enteredAge, setEnteredAge] = useState("");
   const [error, setError] = useState();
 
-  const usernameChangeHandler = (event) => {
-    setEnteredUsername(event.target.value);
-  };
-
-  const ageChangeHandler = (event) => {
-    setEnteredAge(event.target.value);
-  };
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
 
   const errorHandler = () => {
     setError();
@@ -23,6 +17,9 @@ const AddUser = (props) => {
 
   const formSubmitHandler = (event) => {
     event.preventDefault();
+    const enteredUsername = nameInputRef.current.value;
+    const enteredAge = ageInputRef.current.value;
+
     if (
       enteredUsername.trim().length < 1 ||
       !enteredUsername.match(/[a-zA-Z]/)
@@ -38,40 +35,40 @@ const AddUser = (props) => {
       return;
     } else {
       props.onAddUser(enteredUsername, enteredAge);
-      setEnteredUsername("");
-      setEnteredAge("");
+      nameInputRef.current.value = "";
+      ageInputRef.current.value = "";
     }
   };
 
   return (
     <>
-      {error && (
-        <ErrorModal
-          title={error.title}
-          message={error.message}
-          onConfirm={errorHandler}
-        />
-      )}
+      {error &&
+        ReactDOM.createPortal(
+          <ErrorModal
+            title={error.title}
+            message={error.message}
+            onConfirm={errorHandler}
+          />,
+          document.getElementById("modal-root")
+        )}
       <Card className={classes["add-user-form-card"]}>
         <form onSubmit={formSubmitHandler} className={classes["add-user-form"]}>
           <div className="input-wrapper">
             <label htmlFor="user-name">User Name</label>
             <input
-              onChange={usernameChangeHandler}
               id="user-name"
               type="text"
               className={classes["user-name-input"]}
-              value={enteredUsername}
+              ref={nameInputRef}
             />
           </div>
           <div className={classes["add-user-form-input-wrapper"]}>
             <label htmlFor="user-age">User Age</label>
             <input
-              onChange={ageChangeHandler}
               id="user-age"
               type="number"
               className={classes["add-user-form-input-wrapper"]}
-              value={enteredAge}
+              ref={ageInputRef}
             />
           </div>
           <Button type="submit" className={classes["submit-button"]}>
