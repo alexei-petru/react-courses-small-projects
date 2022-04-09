@@ -1,6 +1,10 @@
 .add-user-form {
   margin: 0 auto;
   padding: 15px;
+  margin-left: 15px;
+}
+
+.add-user-form-card {
 }
 
 .add-user-form label {
