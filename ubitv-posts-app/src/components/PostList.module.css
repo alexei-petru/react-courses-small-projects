@@ -1,0 +1,8 @@
+.title {
+  text-align: center;
+  background-color: white;
+  width: 20%;
+  margin: 0 auto;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
