@@ -1,7 +1,16 @@
-import React from "react";
+import { React, useState } from "react";
+import MyButton from "./UI/MyButton";
+import MyInput from "./UI/MyInput";
 
 const PostForm = (props) => {
   const [post, setPost] = useState({ title: "", body: "" });
+
+  const addNewPost = (event) => {
+    event.preventDefault();
+    const newPost = { ...post, id: Date.now() };
+    props.onAddPost(newPost);
+    setPost({ title: "", body: "" });
+  };
 
   return (
     <form>
