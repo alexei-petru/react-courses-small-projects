@@ -7,7 +7,12 @@ const PostList = ({ posts, ...props }) => {
     <div>
       <h1 className={classes.title}>{props.title}</h1>
       {posts.map((post, index) => (
-        <PostItem number={index + 1} post={post} key={post.id} />
+        <PostItem
+          onRemovePost={props.onRemovePost}
+          number={index + 1}
+          post={post}
+          key={post.id}
+        />
       ))}
     </div>
   );

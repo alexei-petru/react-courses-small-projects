@@ -1,10 +1,16 @@
-import React from 'react'
+import React from "react";
+import Header from "./components/Layout/Header";
+import Meals from "./components/Meals/Meals";
 
 const App = () => {
+  return (
+    <>
+      <Header />
+      <main>
+        <Meals />
+      </main>
+    </>
+  );
+};
 
-
-
- return <div className="test">npx create-react-app BRAD-feedback-app --use-npm</div>
-}
-
-export default App
+export default App;
