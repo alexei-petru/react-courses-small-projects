@@ -1,0 +1,21 @@
+.counter-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.counter {
+  margin: 40px 0;
+}
+
+.counter h1 {
+  text-align: center;
+  color: rgb(255, 255, 255);
+  font-size: 40px;
+}
+
+.counter-wrapper button {
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px;
+  font-size: 14px;
+}
