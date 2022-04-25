@@ -1,4 +1,5 @@
 import React from "react";
+import AvailableMealsProvider from "../../store/AvailableMealsProvider";
 import AvailableMeals from "./AvailableMeals";
 import MealsSummary from "./MealsSummary";
 
@@ -6,7 +7,9 @@ const Meals = () => {
   return (
     <>
       <MealsSummary />
-      <AvailableMeals />
+      <AvailableMealsProvider>
+        <AvailableMeals />
+      </AvailableMealsProvider>
     </>
   );
 };

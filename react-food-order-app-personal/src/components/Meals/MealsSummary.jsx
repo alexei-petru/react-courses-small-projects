@@ -11,12 +11,6 @@ const MealsSummary = () => {
         dolore voluptatum, perspiciatis rem repellendus deserunt aliquid tempora
         voluptates, pariatur corporis!
       </p>
-      <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fugit rerum
-        corrupti eveniet laudantium dolor assumenda cupiditate ad nobis, dolores
-        dolore voluptatum, perspiciatis rem repellendus deserunt aliquid tempora
-        voluptates, pariatur corporis!
-      </p>
     </section>
   );
 };
