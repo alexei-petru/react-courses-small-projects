@@ -1,0 +1,27 @@
+.input {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.btns-confirm-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.btns-confirm-wrapper button {
+  margin: 5px;
+  margin-bottom: 0;
+  padding: 5px 10px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btns-confirm-wrapper button:nth-child(1) {
+  background-color: rgb(250, 67, 67);
+}
+
+.btns-confirm-wrapper button:nth-child(2) {
+  background-color: rgb(44, 159, 44);
+}
