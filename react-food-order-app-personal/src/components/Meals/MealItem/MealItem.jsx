@@ -7,11 +7,11 @@ import MealItemEdit from "./MealItemEdit";
 
 const MealItemInfo = (props) => {
   return (
-    <>
+    <div className={classes["meal-info"]}>
       <h3>{props.menuItem.name}</h3>
       <div className={classes.description}>{props.menuItem.description}</div>
-      <div className={classes.price}>{props.menuItem.price}</div>
-    </>
+      <div className={classes.price}>{`${props.price} €`}</div>
+    </div>
   );
 };
 
@@ -44,20 +44,14 @@ const MealItem = (props) => {
           <EditIcon />
         </button>
       </div>
-      <div className={classes["meal-info"]}>
+      <div className={classes["meal-info-and-edit-wrapper"]}>
         {isEditInfo ? (
-          <MealItemEdit
-            closeEdit={editInfoHandler}
-            menuItem={props}
-            price={price}
-          />
+          <MealItemEdit closeEdit={editInfoHandler} menuItem={props} />
         ) : (
-          <MealItemInfo menuItem={props} />
+          <MealItemInfo menuItem={props} price={price} />
         )}
       </div>
-      <div>
-        <MealItemForm onAddToCart={addToCardHandler} />
-      </div>
+      <div>{isEditInfo || <MealItemForm onAddToCart={addToCardHandler} />}</div>
     </li>
   );
 };

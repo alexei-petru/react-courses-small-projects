@@ -6,6 +6,23 @@ const availableMealsReducer = (state, action) => {
     const updatedItems = [action.item].concat([...state.items]);
     return { items: updatedItems };
   }
+  if (action.type === "EDIT") {
+    const existingMealItemIndex = state.items.findIndex(
+      (item) => item.id === action.item.id
+    );
+    let updatedItems = [...state.items];
+
+    const oldItemData = `${updatedItems[existingMealItemIndex].name}${updatedItems[existingMealItemIndex].price}`;
+    const newItemData = `${action.item.name}${action.item.price}`;
+
+    let newItem;
+    oldItemData === newItemData
+      ? (newItem = action.item)
+      : (newItem = { ...action.item, id: action.item.currentId });
+
+    updatedItems[existingMealItemIndex] = newItem;
+    return { items: updatedItems };
+  }
 };
 
 const AvailableMealsProvider = (props) => {
@@ -41,9 +58,14 @@ const AvailableMealsProvider = (props) => {
     dispatchEvent({ type: "ADD", item: item });
   };
 
+  const editItemHandler = (item) => {
+    dispatchEvent({ type: "EDIT", item: item });
+  };
+
   const availableMealsContext = {
     items: availableMealsState.items,
     addItem: addItemHandler,
+    editItem: editItemHandler,
   };
 
   return (

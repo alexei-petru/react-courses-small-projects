@@ -1,25 +1,48 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
+import AvailableMealsContext from "../../../store/available-meals-context";
 import Input from "../../UI/Input";
 import classes from "./MealItemEdit.module.css";
 
 const MealItemEdit = (props) => {
-  const editInputsRef = useRef({
-    name: null,
-    description: null,
-    price: null,
-  });
+  const availableMealsCtx = useContext(AvailableMealsContext);
+  const [isPriceValid, setIsPriceValid] = useState(false);
 
   const nameRef = useRef();
+  const descriptionRef = useRef();
+  const priceRef = useRef();
+  const timerRef = useRef({});
 
-  const submitEditValuesHandler = () => {
-    console.log(editInputsRef);
-    console.log(nameRef.current.value);
+  const submitEditValuesHandler = (event) => {
+    event.preventDefault();
+    if (+priceRef.current.value <= 0 || priceRef.current.value > 10000) {
+      setIsPriceValid(true);
+      clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
+        setIsPriceValid(false);
+      }, 3000);
+      return;
+    }
+    const editedValues = {
+      id: props.menuItem.id,
+      currentId: `${Date.now()}`,
+      name: nameRef.current.value.trim(),
+      description: descriptionRef.current.value.trim(),
+      price: +priceRef.current.value,
+    };
+
+    availableMealsCtx.editItem(editedValues);
+    props.closeEdit();
   };
   return (
-    <>
+    <form className={classes["edit-meal-form"]} onSubmit={submitEditValuesHandler}>
       <Input
         className={classes.input}
-        input={{ type: "text", id: "name", defaultValue: props.menuItem.name }}
+        input={{
+          type: "text",
+          id: "name",
+          defaultValue: props.menuItem.name,
+          required: true,
+        }}
         label={"name"}
         ref={nameRef}
       />
@@ -29,25 +52,35 @@ const MealItemEdit = (props) => {
           type: "text",
           id: "description",
           defaultValue: props.menuItem.description,
+          required: true,
         }}
         label={"description"}
-        ref={editInputsRef.descripion}
+        ref={descriptionRef}
       />
       <Input
         className={classes.input}
         input={{
-          type: "text",
+          type: "number",
           id: "price",
           defaultValue: props.menuItem.price,
+          required: true,
+          step: "any",
         }}
         label={"price"}
-        ref={editInputsRef.price}
+        ref={priceRef}
       />
+      {isPriceValid && (
+        <p style={{ margin: 0, color: "red" }}>
+          Please type a price bigger than 0 and no more than 10 000
+        </p>
+      )}
       <div className={classes["btns-confirm-wrapper"]}>
-        <button onClick={props.closeEdit}>Cancel</button>
-        <button onClick={submitEditValuesHandler}>Confirm</button>
+        <button type="button" onClick={props.closeEdit}>
+          Cancel
+        </button>
+        <button type="submit">Confirm</button>
       </div>
-    </>
+    </form>
   );
 };
 

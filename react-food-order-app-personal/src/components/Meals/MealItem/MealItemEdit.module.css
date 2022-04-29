@@ -1,3 +1,7 @@
+.edit-meal-form {
+  transition: all 1s ease-in-out;
+}
+
 .input {
   flex-direction: column;
   align-items: flex-start;
