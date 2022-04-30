@@ -51,7 +51,11 @@ const MealItem = (props) => {
           <MealItemInfo menuItem={props} price={price} />
         )}
       </div>
-      <div>{isEditInfo || <MealItemForm onAddToCart={addToCardHandler} />}</div>
+      <div>
+        {isEditInfo || (
+          <MealItemForm id={props.id} onAddToCart={addToCardHandler} />
+        )}
+      </div>
     </li>
   );
 };

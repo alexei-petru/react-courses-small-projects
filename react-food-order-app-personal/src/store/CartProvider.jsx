@@ -52,6 +52,26 @@ const cartReducer = (state, action) => {
 
     return { items: updatedItems, totalAmount: updatedTotalAmount };
   }
+
+  if (action.type === "EDITED-AMOUNT") {
+    const existingCartItemIndex = state.items.findIndex((item) => {
+      return item.id === action.item.id;
+    });
+    const updatedItems = [...state.items];
+
+    const existingCartItem = updatedItems[existingCartItemIndex];
+    const newItem = {
+      ...existingCartItem,
+      amount: action.item.amount,
+    };
+    updatedItems[existingCartItemIndex] = newItem;
+
+    const updatedTotalAmount = updatedItems.reduce((acc, cur) => {
+      return acc + cur.amount * cur.price;
+    }, 0);
+
+    return { items: updatedItems, totalAmount: updatedTotalAmount };
+  }
 };
 
 const CartProvider = (props) => {
@@ -68,11 +88,20 @@ const CartProvider = (props) => {
     dispatchCartAction({ type: "REMOVE", id: id });
   };
 
+  const addEditedAmountHandler = (item) => {
+    console.log(item);
+    dispatchCartAction({
+      type: "EDITED-AMOUNT",
+      item: item,
+    });
+  };
+
   const cartContext = {
     items: cartState.items,
     totalAmount: cartState.totalAmount,
     addItem: addItemToCartHandler,
     removeItem: removeItemFromCartHanlder,
+    addEditedAmount: addEditedAmountHandler,
   };
   return (
     <CartContext.Provider value={cartContext}>

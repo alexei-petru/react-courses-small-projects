@@ -9,9 +9,14 @@
   margin-right: 1rem;
 }
 
-.input input {
+.input input,
+.simple-input {
   border-radius: 5px;
   border: 1px solid #ccc;
   font: inherit;
   padding-left: 0.5rem;
+}
+
+.simple-input {
+  width: 50px;
 }

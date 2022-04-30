@@ -15,8 +15,6 @@
 .summary {
   width: 10rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
 .price {
@@ -25,11 +23,29 @@
 }
 
 .amount {
-  font-weight: bold;
+  margin-left: 1rem;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  padding: 0.25rem 0.75rem;
-  border-radius: 6px;
+  padding-left: 0.5rem;
+  /* width: 4rem; */
+}
+
+.amount input {
+  font-weight: bold;
   color: #363636;
+  width: 50px;
+  padding-left: 2px;
+  border: none;
+}
+
+.amount input:focus,
+.amount label {
+  margin-left: 0.3rem;
+}
+
+.amount label {
+  margin: 0;
+  border: none;
 }
 
 .actions {

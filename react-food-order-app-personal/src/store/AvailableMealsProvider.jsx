@@ -32,7 +32,7 @@ const AvailableMealsProvider = (props) => {
         id: "m1",
         name: "Sushi",
         description: "Finest fish and veggies",
-        price: 22.99,
+        price: 1,
       },
       {
         id: "m2",
