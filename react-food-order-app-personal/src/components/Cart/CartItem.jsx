@@ -33,6 +33,15 @@ const CartItem = (props) => {
 
   const price = `$${props.price.toFixed(2)}`;
 
+  const object = {
+    name: "bot",
+    age: 32,
+    botAge: function () {
+      console.log(this.age);
+    },
+  };
+  object.botAge();
+
   return (
     <li className={classes["cart-item"]}>
       <div>

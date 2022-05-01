@@ -13,6 +13,7 @@ function App() {
 
   const addPostHandler = (newPost) => {
     setPosts([...posts, newPost]);
+    
   };
 
   const removePostHandler = (post) => {

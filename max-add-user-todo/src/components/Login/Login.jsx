@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import classes from "./Login.module.css";
-import ErrorModal from "../UI/ErrorModal";
 
 const Login = (props) => {
   const usernameRef = useRef();
