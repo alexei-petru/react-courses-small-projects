@@ -10,11 +10,9 @@ const CartItem = (props) => {
 
   const cartCtx = useContext(CartContext);
 
-  const amountRef = useRef();
-
-  const editChangeHandler = () => {
-    const amountRefVal = +amountRef.current.value;
-    if (amountRefVal > 100 || amountRefVal < 1) {
+  const editChangeHandler = (event) => {
+    const amountInputVal = +event.target.value;
+    if (amountInputVal > 100 || amountInputVal < 1) {
       setIsInputValid(false);
 
       clearTimeout(timer.current);
@@ -26,21 +24,12 @@ const CartItem = (props) => {
       setIsInputValid(true);
       cartCtx.addEditedAmount({
         id: props.id,
-        amount: +amountRefVal,
+        amount: amountInputVal,
       });
     }
   };
 
   const price = `$${props.price.toFixed(2)}`;
-
-  const object = {
-    name: "bot",
-    age: 32,
-    botAge: function () {
-      console.log(this.age);
-    },
-  };
-  object.botAge();
 
   return (
     <li className={classes["cart-item"]}>
@@ -49,11 +38,10 @@ const CartItem = (props) => {
         <div className={classes.summary}>
           <span className={classes.price}>{`${price} €`}</span>
           <Input
-            onChange={editChangeHandler}
+            onChange={(event) => editChangeHandler(event)}
             className={classes.amount}
             label={"x"}
             input={{
-              ref: amountRef,
               id: props.name,
               value: isInputValid ? props.amount : "",
               type: "number",
