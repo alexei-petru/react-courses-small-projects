@@ -1,32 +1,34 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
 import classes from "./App.module.css";
-import MySelect from "./components/UI/MySelect";
-import MyInput from "./components/UI/MyInput";
+import PostFilter from "./components/PostFilter";
 
 function App() {
   const [posts, setPosts] = useState([
-    { id: 1, title: "javascript", body: "1:13" },
+    { id: 1, title: "javascript", body: "1:14" },
     { id: 2, title: "css", body: "b" },
     { id: 3, title: "html", body: "a" },
   ]);
 
-  const [searchQuerry, setSearchQuerry] = useState("");
-  const [selectedSort, setSelectedSort] = useState("");
+  const [filter, setFilter] = useState({ sort: "", querry: "" });
 
-  const getSortedPosts = function () {
-    if (selectedSort) {
+  const sortedPosts = useMemo(() => {
+    if (filter.sort) {
       console.log("sorting posts");
       return [...posts].sort((a, b) =>
-        a[selectedSort].localeCompare(b[selectedSort])
+        a[filter.sort].localeCompare(b[filter.sort])
       );
     } else {
       return posts;
     }
-  };
+  }, [filter.sort, posts]);
 
-  const sortedPosts = getSortedPosts();
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter((post) =>
+      post.title.toLowerCase().includes(filter.querry.toLowerCase())
+    );
+  }, [sortedPosts, filter.querry]);
 
   const addPostHandler = (newPost) => {
     setPosts([...posts, newPost]);
@@ -36,35 +38,15 @@ function App() {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
 
-  const sortPosts = (sort) => {
-    setSelectedSort(sort);
-  };
-
   return (
     <div className={classes.App}>
       <PostForm onAddPost={addPostHandler} />
       <hr style={{ margin: "15px 0" }} />
-      <div>
-        <MyInput
-          onChange={(event) => setSearchQuerry(event.target.value)}
-          placeholder={"Search..."}
-          value={searchQuerry}
-          type={"text"}
-        />
-        <MySelect
-          value={selectedSort}
-          onChange={sortPosts}
-          defaultValue={"Sort"}
-          options={[
-            { value: "title", name: "by title" },
-            { value: "body", name: "by description" },
-          ]}
-        />
-      </div>
-      {posts.length ? (
+      <PostFilter filter={filter} setFilter={setFilter} />
+      {sortedAndSearchedPosts.length ? (
         <PostList
           onRemovePost={removePostHandler}
-          posts={sortedPosts}
+          posts={sortedAndSearchedPosts}
           title={"List 1"}
         />
       ) : (
