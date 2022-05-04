@@ -3,15 +3,18 @@ import PostForm from "./components/PostForm";
 import PostList from "./components/PostList";
 import classes from "./App.module.css";
 import PostFilter from "./components/PostFilter";
+import MyModal from "./components/UI/MyModal";
+import MyButton from "./components/UI/MyButton";
 
 function App() {
   const [posts, setPosts] = useState([
-    { id: 1, title: "javascript", body: "1:14" },
+    { id: 1, title: "javascript", body: "1:30" },
     { id: 2, title: "css", body: "b" },
     { id: 3, title: "html", body: "a" },
   ]);
 
   const [filter, setFilter] = useState({ sort: "", querry: "" });
+  const [modal, setModal] = useState(false);
 
   const sortedPosts = useMemo(() => {
     if (filter.sort) {
@@ -32,6 +35,7 @@ function App() {
 
   const addPostHandler = (newPost) => {
     setPosts([...posts, newPost]);
+    setModal(false);
   };
 
   const removePostHandler = (post) => {
@@ -40,18 +44,19 @@ function App() {
 
   return (
     <div className={classes.App}>
-      <PostForm onAddPost={addPostHandler} />
+      <MyButton style={{ marginTop: "20px" }} onClick={() => setModal(true)}>
+        Add Post
+      </MyButton>
+      <MyModal setVisible={setModal} visible={modal}>
+        <PostForm onAddPost={addPostHandler} />
+      </MyModal>
       <hr style={{ margin: "15px 0" }} />
       <PostFilter filter={filter} setFilter={setFilter} />
-      {sortedAndSearchedPosts.length ? (
-        <PostList
-          onRemovePost={removePostHandler}
-          posts={sortedAndSearchedPosts}
-          title={"List 1"}
-        />
-      ) : (
-        <h1 className={classes.noPosts}>No added Posts</h1>
-      )}
+      <PostList
+        onRemovePost={removePostHandler}
+        posts={sortedAndSearchedPosts}
+        title={"List 1"}
+      />
     </div>
   );
 }

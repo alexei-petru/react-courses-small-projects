@@ -6,3 +6,9 @@
   border-top-right-radius: 10px;
   border-bottom-left-radius: 10px;
 }
+
+.noPosts {
+  text-align: center;
+  background-color: white;
+  margin-top: 5%;
+}
