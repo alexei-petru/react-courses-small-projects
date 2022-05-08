@@ -5,6 +5,7 @@ import classes from "./App.module.css";
 import PostFilter from "./components/PostFilter";
 import MyModal from "./components/UI/MyModal";
 import MyButton from "./components/UI/MyButton";
+import { usePosts } from "./hooks/usePosts";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -16,22 +17,7 @@ function App() {
   const [filter, setFilter] = useState({ sort: "", querry: "" });
   const [modal, setModal] = useState(false);
 
-  const sortedPosts = useMemo(() => {
-    if (filter.sort) {
-      console.log("sorting posts");
-      return [...posts].sort((a, b) =>
-        a[filter.sort].localeCompare(b[filter.sort])
-      );
-    } else {
-      return posts;
-    }
-  }, [filter.sort, posts]);
-
-  const sortedAndSearchedPosts = useMemo(() => {
-    return sortedPosts.filter((post) =>
-      post.title.toLowerCase().includes(filter.querry.toLowerCase())
-    );
-  }, [sortedPosts, filter.querry]);
+  const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.querry);
 
   const addPostHandler = (newPost) => {
     setPosts([...posts, newPost]);
@@ -41,7 +27,6 @@ function App() {
   const removePostHandler = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
-
   return (
     <div className={classes.App}>
       <MyButton style={{ marginTop: "20px" }} onClick={() => setModal(true)}>

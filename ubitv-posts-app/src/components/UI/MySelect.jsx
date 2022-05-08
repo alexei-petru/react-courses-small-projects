@@ -8,7 +8,12 @@ const MySelect = ({ options, defaultValue, value, onChange }) => {
       onChange={(event) => onChange(event.target.value)}
       className={classes.select}
     >
-      <option disabled>{defaultValue}</option>
+      <option
+        disabled={defaultValue !== "UNSORTED"}
+        value={defaultValue === "UNSORTED" ? "UNSORTED" : ""}
+      >
+        {defaultValue === "UNSORTED" ? "Unsorted" : defaultValue}
+      </option>
       {options.map((option) => {
         return (
           <option key={option.value} value={option.value}>

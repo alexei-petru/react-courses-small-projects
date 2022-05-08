@@ -2,6 +2,7 @@ import React from "react";
 import Counter from "./components/Counter";
 import classes from "./App.module.css";
 import CounterProvider from "./store/CounterProvider";
+import ReevAndRerendering from "./components/ReevAndRerendering";
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <CounterProvider>
         <Counter />
       </CounterProvider>
+      <ReevAndRerendering />
     </div>
   );
 };

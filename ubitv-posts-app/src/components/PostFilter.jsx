@@ -14,9 +14,9 @@ const PostFilter = ({ filter, setFilter }) => {
         type={"text"}
       />
       <MySelect
+        defaultValue={"UNSORTED"}
         value={filter.sort}
         onChange={(slectedSort) => setFilter({ ...filter, sort: slectedSort })}
-        defaultValue={"Sort"}
         options={[
           { value: "title", name: "by title" },
           { value: "body", name: "by description" },
