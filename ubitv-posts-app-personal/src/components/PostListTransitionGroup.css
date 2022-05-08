@@ -1,0 +1,41 @@
+.post-enter {
+  opacity: 0;
+  transform: translateX(-350px);
+}
+
+.post-enter-active {
+  opacity: 1;
+  transition: all 400ms ease-in;
+  transform: translateX(0px);
+}
+
+.post-exit {
+  opacity: 0.8;
+}
+
+.post-exit-active {
+  opacity: 0;
+  transition: all 400ms ease-in;
+  transform: translateX(-350px);
+}
+
+.no-posts-enter {
+  opacity: 0;
+  transform: translateX(-350px);
+}
+
+.no-posts-enter-active {
+  opacity: 1;
+  transition: all 400ms ease-in;
+  transform: translateX(0px);
+}
+
+.no-posts-exit {
+  opacity: 0.8;
+}
+
+.no-posts-exit-active {
+  opacity: 0;
+  transition: all 400ms ease-in;
+  transform: translateX(-350px);
+}

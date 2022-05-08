@@ -1,0 +1,10 @@
+.myButton {
+  padding: 10px 17px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid green;
+}
+
+.myButton:hover {
+  transform: scale(1.1);
+}
