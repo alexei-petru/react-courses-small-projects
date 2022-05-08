@@ -35,8 +35,10 @@ const PostList = ({ posts, ...props }) => {
 
   return (
     <div>
-      <NoPostsTitle isNoPosts={isNoPosts} />
-      <PostsListTitle isNoPosts={isNoPosts} title={props.title} />
+      <div className={classes.postsHeader}>
+        <NoPostsTitle isNoPosts={isNoPosts} />
+        <PostsListTitle isNoPosts={isNoPosts} title={props.title} />
+      </div>
       <TransitionGroup>
         {posts.map((post, index) => (
           <CSSTransition key={post.id} timeout={500} classNames={"post"}>
