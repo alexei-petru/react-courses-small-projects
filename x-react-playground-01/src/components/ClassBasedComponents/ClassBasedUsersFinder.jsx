@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MyInput from "../../UI/MyInput";
 import classes from "./ClassBasedUsersFinder.module.css";
 import ClassToggleUsersList from "./ClassToggleUsersList";
@@ -10,6 +10,20 @@ const ClassBasedUsersFinder = () => {
     { id: "user03", name: "George" },
   ];
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState(usersData);
+
+  const searchChangeHandler = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  useEffect(() => {
+    const filteredData = usersData.filter((user) =>
+      user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredUsers(filteredData);
+  }, [searchTerm]);
+
   return (
     <div className={classes.userFinderWrapper}>
       <div className={classes.userFinderInputWrapper}>
@@ -19,10 +33,11 @@ const ClassBasedUsersFinder = () => {
             type: "search",
             id: "FindUser",
             className: classes.inputFinder,
+            onChange: searchChangeHandler,
           }}
         />
       </div>
-      <ClassToggleUsersList users={usersData} />
+      <ClassToggleUsersList users={filteredUsers} />
     </div>
   );
 };

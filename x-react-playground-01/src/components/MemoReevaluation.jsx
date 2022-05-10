@@ -4,7 +4,6 @@ import MyButton from "../UI/MyButton";
 import cl from "./MemoReevaluation.module.css";
 
 const MemoReevaluation = () => {
-  console.log("reexecuted MemoReevaluation");
   return (
     <div className={cl.MemoReev}>
       <MyParagraph>a reev paragraph</MyParagraph>

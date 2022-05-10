@@ -11,7 +11,6 @@ import CounterContext from "../store/counter-context";
 const Counter = () => {
   const ctx = useContext(CounterContext);
 
-  console.log(ctx);
   return (
     <>
       <div
