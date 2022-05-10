@@ -1,0 +1,10 @@
+.userName {
+  font-size: 20px;
+  background-color: purple;
+  border-radius: 10px;
+  list-style-type: none;
+  padding: 5px;
+  color: white;
+  margin: 5px 0;
+  text-align: center;
+}

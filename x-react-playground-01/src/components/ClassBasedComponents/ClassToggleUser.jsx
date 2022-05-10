@@ -6,11 +6,13 @@
 
 // export default ClassToggleUser;
 
+import classes from "./ClassToggleUser.module.css"
+
 import { Component } from "react";
 
 class ClassToggleUser extends Component {
   render() {
-    return <li>{this.props.name}</li>;
+    return <li className={classes.userName}>{this.props.name}</li>;
   }
 }
 

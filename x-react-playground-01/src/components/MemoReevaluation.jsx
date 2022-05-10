@@ -8,7 +8,7 @@ const MemoReevaluation = () => {
   return (
     <div className={cl.MemoReev}>
       <MyParagraph>a reev paragraph</MyParagraph>
-      <MyButton> change reev paragraph</MyButton>
+      <MyButton disabled> change reev paragraph</MyButton>
     </div>
   );
 };
