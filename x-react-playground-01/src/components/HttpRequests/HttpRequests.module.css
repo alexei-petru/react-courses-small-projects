@@ -1,0 +1,25 @@
+.httpRequests {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  border: 10px solid cyan;
+  padding: 10px;
+}
+
+.sendRequestBtn {
+  background-color: orange;
+}
+
+.sendRequestBtn:hover {
+  background-color: rgb(255, 178, 36);
+}
+
+.showImg {
+  display: inline-block;
+  opacity: 1;
+}
+.hideImg {
+  display: none;
+  opacity: 0;
+}

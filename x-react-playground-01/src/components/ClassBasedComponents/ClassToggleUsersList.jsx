@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import MyButton from "../../UI/MyButton";
 import ClassToggleUser from "./ClassToggleUser";
 import classes from "./ClassToggleUsersList.module.css";
@@ -11,6 +11,13 @@ class ClassToggleUsersList extends Component {
       more: "test",
     };
   }
+
+  componentDidUpdate() {
+    if (this.props.users.length === 0) {
+      throw new Error("no users provided");
+    }
+  }
+
   toogleUsersList = () => {
     this.setState((prev) => {
       return { showUsersList: !prev.showUsersList };

@@ -4,10 +4,12 @@ import classes from "./App.module.css";
 import CounterProvider from "./store/CounterProvider";
 import ReevAndRerendering from "./components/ReevAndRerendering";
 import ClassBasedUsersFinder from "./components/ClassBasedComponents/ClassBasedUsersFinder";
+import HttpRequests from "./components/HttpRequests/HttpRequests";
 
 const App = () => {
   return (
     <div className={classes.container}>
+      <HttpRequests />
       <CounterProvider>
         <Counter />
       </CounterProvider>

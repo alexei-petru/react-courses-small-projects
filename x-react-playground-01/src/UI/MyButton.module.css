@@ -1,4 +1,14 @@
 .myButton {
   border-radius: 5px;
   padding: 5px;
+  cursor: pointer;
+}
+
+.myButton:hover {
+  transform: scale(1.03);
+  background-color: gainsboro;
+}
+
+.myButton:active {
+  border: 1px solid black;
 }
