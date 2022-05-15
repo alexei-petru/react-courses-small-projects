@@ -1,0 +1,39 @@
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.title,
+.titleHint {
+  flex-basis: 100%;
+  text-align: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.titleHint {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.startDateLabel,
+.endDateLabel {
+  background-color: #8afebf;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+
+.endDateLabel {
+  background-color: #ff8a8a;
+}
+
+.startInput {
+}
+
+.endInput {
+}

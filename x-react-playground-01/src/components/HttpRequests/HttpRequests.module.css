@@ -9,6 +9,7 @@
 
 .sendRequestBtn {
   background-color: orange;
+  margin-bottom: 10px;
 }
 
 .sendRequestBtn:hover {
