@@ -9,36 +9,65 @@ import {
   getTodayISOFormatedDate,
 } from "./http-requests-helpers";
 
-const reducer = (state, action) => {
-  if (action.type === "STARTDATE") {
-    const startDateMs = Date.parse(action.value);
-    const endDateMs = Date.parse(state.endDate);
-    console.log(startDateMs);
-    console.log(endDateMs);
+const isDatesRangeValid = (startDate, endDate, type) => {
+  const startDateMs = Date.parse(startDate);
+  const endDateMs = Date.parse(endDate);
+  const sevenDays = 7 * 24 * 60 * 60 * 1000;
 
-    if (endDateMs - startDateMs < 0) {
-      console.log(endDateMs - startDateMs, "minus");
-      return { startDate: action.value, endDate: action.value };
-    }
+  if (endDateMs - startDateMs < 0) {
+    return {
+      startDate: type === startDate ? startDate : endDate,
+      endDate: type === startDate ? startDate : endDate,
+    };
+  }
 
-    const sevenDays = 7 * 24 * 60 * 60 * 1000;
-    if (endDateMs - startDateMs > sevenDays) {
-      console.log("bigger Than 7");
+  if (endDateMs - startDateMs > sevenDays) {
+    if (type === "STARTDATE") {
       const datePlusSevenDaysISO = getTodayISOFormatedDate(
         startDateMs + sevenDays
       );
-      console.log(datePlusSevenDaysISO);
-      return { startDate: action.value, endDate: datePlusSevenDaysISO };
+      return { startDate: startDate, endDate: datePlusSevenDaysISO };
     }
 
+    if (type === "ENDDATE") {
+      const datePlusSevenDaysISO = getTodayISOFormatedDate(
+        endDateMs - sevenDays
+      );
+      return { startDate: datePlusSevenDaysISO, endDate: endDate };
+    }
+  }
+};
+
+const reducer = (state, action) => {
+  if (action.type === "STARTDATE") {
     const newStartDate = action.value;
-    return { ...state, startDate: newStartDate };
+    const datesRange = isDatesRangeValid(
+      action.value,
+      state.endDate,
+      action.type
+    );
+
+    if (datesRange) {
+      return datesRange;
+    } else {
+      return { ...state, startDate: newStartDate };
+    }
   }
 
   if (action.type === "ENDDATE") {
-    console.log("end");
     const newEndDate = action.value;
-    return { ...state, endDate: newEndDate };
+    const datesRange = isDatesRangeValid(
+      state.startDate,
+      newEndDate,
+      action.type
+    );
+
+    //fallback
+    if (datesRange) {
+      return datesRange;
+    } else {
+      return { ...state, startDate: newEndDate };
+    }
   }
 };
 
