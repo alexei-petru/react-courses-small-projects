@@ -7,14 +7,6 @@
   padding: 10px;
 }
 
-.sendRequestBtn {
-  background-color: orange;
-  margin-bottom: 10px;
-}
-
-.sendRequestBtn:hover {
-  background-color: rgb(255, 178, 36);
-}
 
 .showImg {
   display: inline-block;

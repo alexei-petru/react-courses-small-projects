@@ -1,6 +1,7 @@
 import React from "react";
 import MyInput from "../../../UI/MyInput";
 import classes from "./HttpRequestsDaysForm.module.css";
+import MyButton from "../../../UI/MyButton";
 
 const HttpRequestsDaysForm = (props) => {
   const selectedStartDateHandler = (event) => {
@@ -14,12 +15,12 @@ const HttpRequestsDaysForm = (props) => {
   return (
     <form className={classes.form}>
       <p className={classes.title}>Select Date range</p>
-      <p className={classes.titleHint}>*7 days range</p>
+      <p className={classes.titleHint}>*7 days auto range</p>
       <MyInput
         input={{
           type: "date",
           name: "startDate",
-          defaultValue: props.selectedDate.startDate,
+          value: props.selectedDate.startDate,
           min: "1995-01-01",
           max: props.getToday(),
           onChange: selectedStartDateHandler,
@@ -31,13 +32,18 @@ const HttpRequestsDaysForm = (props) => {
         input={{
           type: "date",
           name: "endDate",
-          defaultValue: props.selectedDate.endDate,
+          value: props.selectedDate.endDate,
           onChange: selectedEndDateHandler,
           className: classes.endInput,
           max: props.getToday(),
         }}
         label={{ name: "End Date", className: classes["endDateLabel"] }}
       ></MyInput>
+      <div className={classes["button-wrapper"]}>
+        <MyButton className={classes.sendRequestBtn} onClick={props.onClick}>
+          Get asteroids info
+        </MyButton>
+      </div>
     </form>
   );
 };

@@ -37,3 +37,18 @@
 
 .endInput {
 }
+
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-basis: 100%;
+}
+.sendRequestBtn {
+  background-color: orange;
+  margin: 10px 0;
+  padding: 10px;
+}
+
+.sendRequestBtn:hover {
+  background-color: rgb(255, 178, 36);
+}

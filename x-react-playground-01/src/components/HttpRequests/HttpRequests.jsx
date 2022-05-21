@@ -1,31 +1,37 @@
-import React, { useCallback, useEffect, useReducer, useState } from "react";
-import MyButton from "../../UI/MyButton";
+import React, { useReducer, useState } from "react";
 import LoadingImg from "../../UI/LoadingImg";
 import classes from "./HttpRequests.module.css";
-import HttpRequestsList from "./HttpRequestsList";
 import HttpRequestsDaysForm from "./HttpRequestsDaysForm/HttpRequestsDaysForm";
-
-const getTodayFormatedDate = () => {
-  return new Date().toISOString().slice(0, 10);
-};
-
-const getAsteroidAPIArray = async (startDate, endDate) => {
-  console.log("13:06:01", startDate, endDate);
-  const ApiKey = "XDujIISECRZoDgjNy2xU4w6AkxzotNpgiZRuCRtd";
-  //date-format"YYYY-MM-DD";
-
-  const closestAsteroidsApi = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${ApiKey}`;
-  const responseApi = await fetch(closestAsteroidsApi);
-  if (!responseApi.ok) throw new Error(`Server answer ${responseApi.status} `);
-  const responseJson = await responseApi.json();
-  let daysArrays = Object.entries(responseJson["near_earth_objects"]);
-  return daysArrays;
-};
+import DaysList from "./DaysList/DaysList";
+import NoAsteroids from "./NoAsteroids/NoAsteroids";
+import {
+  compareDaysArrayFromAPI,
+  getTodayISOFormatedDate,
+} from "./http-requests-helpers";
 
 const reducer = (state, action) => {
   if (action.type === "STARTDATE") {
+    const startDateMs = Date.parse(action.value);
+    const endDateMs = Date.parse(state.endDate);
+    console.log(startDateMs);
+    console.log(endDateMs);
+
+    if (endDateMs - startDateMs < 0) {
+      console.log(endDateMs - startDateMs, "minus");
+      return { startDate: action.value, endDate: action.value };
+    }
+
+    const sevenDays = 7 * 24 * 60 * 60 * 1000;
+    if (endDateMs - startDateMs > sevenDays) {
+      console.log("bigger Than 7");
+      const datePlusSevenDaysISO = getTodayISOFormatedDate(
+        startDateMs + sevenDays
+      );
+      console.log(datePlusSevenDaysISO);
+      return { startDate: action.value, endDate: datePlusSevenDaysISO };
+    }
+
     const newStartDate = action.value;
-    // if()
     return { ...state, startDate: newStartDate };
   }
 
@@ -34,81 +40,68 @@ const reducer = (state, action) => {
     const newEndDate = action.value;
     return { ...state, endDate: newEndDate };
   }
-  return state;
 };
 
 const HttpRequests = () => {
   const initialState = {
-    startDate: getTodayFormatedDate(),
-    endDate: getTodayFormatedDate(),
+    startDate: getTodayISOFormatedDate(),
+    endDate: getTodayISOFormatedDate(),
   };
 
   const [dateState, dispatch] = useReducer(reducer, initialState);
 
-  const [daysState, setDaysState] = useState(false);
+  const [isArrayEmpty, setIsArrayEmpty] = useState(false);
   const [showLoadingImg, setShowLoadingImg] = useState(false);
   const [errorState, setErrorState] = useState(false);
+  const [daysArrayState, setDaysArrayState] = useState(false);
 
-  const mainResponseHandler = useCallback(async () => {
+  const getDaysArrayFromAPIHandler = async () => {
+    return await compareDaysArrayFromAPI(
+      dateState.startDate,
+      dateState.endDate
+    );
+  };
+
+  const mainResponseHandler = async (event) => {
+    event.preventDefault();
     setShowLoadingImg(true);
-    setDaysState(false);
     setErrorState(false);
-    try {
-      const daysArrays = (
-        await getAsteroidAPIArray(dateState.startDate, dateState.endDate)
-      ).sort((firstArr, secondArr) => {
-        return firstArr[0].localeCompare(secondArr[0]);
-      });
+    setDaysArrayState(false);
+    setIsArrayEmpty(false);
 
-      const daysList = (
-        <ol>
-          {daysArrays.map((mainArray, i) => {
-            return (
-              <HttpRequestsList
-                mainArray={mainArray}
-                key={`${i} ${mainArray[0]}`}
-              />
-            );
-          })}
-        </ol>
-      );
-      setDaysState(
-        daysArrays.length ? (
-          daysList
-        ) : (
-          <p>No asteroids has been found for this day</p>
-        )
-      );
+    try {
+      const daysArrays = await getDaysArrayFromAPIHandler();
+      if (daysArrays.length > 0) {
+        setDaysArrayState(daysArrays);
+      } else if (!daysArrays.length) {
+        setIsArrayEmpty(true);
+      }
     } catch (error) {
-      setErrorState(<p>Something went wrong {error.message} </p>);
+      setErrorState(error.message);
     }
     setShowLoadingImg(false);
-  }, [dateState]);
-
-  //fetch data on startup
-  // useEffect(() => {
-  //   mainResponseHandler();
-  // }, []);
+  };
 
   return (
     <div className={classes.httpRequests}>
       <HttpRequestsDaysForm
         onSelectDate={dispatch}
         selectedDate={dateState}
-        getToday={getTodayFormatedDate}
-      />
-      <MyButton
-        className={classes.sendRequestBtn}
+        getToday={getTodayISOFormatedDate}
         onClick={mainResponseHandler}
-      >
-        Get asteroids info
-      </MyButton>
+      />
       <div>
         <LoadingImg
           className={showLoadingImg ? classes.showImg : classes.hideImg}
         />
       </div>
-      <div>{errorState ? errorState : daysState}</div>
+      <div>
+        {!errorState && !isArrayEmpty && daysArrayState && (
+          <DaysList daysArrays={daysArrayState} />
+        )}
+        {errorState && <p>Something went wrong {errorState}</p>}
+        {isArrayEmpty && <NoAsteroids />}
+      </div>
     </div>
   );
 };
