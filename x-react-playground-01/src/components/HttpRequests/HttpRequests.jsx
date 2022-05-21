@@ -9,6 +9,8 @@ import {
   getTodayISOFormatedDate,
 } from "./http-requests-helpers";
 
+//log
+
 const isDatesRangeValid = (startDate, endDate, type) => {
   const startDateMs = Date.parse(startDate);
   const endDateMs = Date.parse(endDate);
