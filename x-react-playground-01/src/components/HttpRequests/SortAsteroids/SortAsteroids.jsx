@@ -14,9 +14,9 @@ const SortAsteroids = ({ sortedOption, onSortOptionChange }) => {
         }}
         options={[
           { value: "day", name: "by Day" },
-          { value: "size-day", name: "by Size Daily" },
+          { value: "size-daily", name: "by Size Daily" },
           { value: "size-all", name: "by Size All" },
-          { value: "danger-day", name: "by Danger Daily" },
+          { value: "danger-daily", name: "by Danger Daily" },
           { value: "danger-all", name: "by Danger All" },
         ]}
       />

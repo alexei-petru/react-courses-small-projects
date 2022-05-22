@@ -60,5 +60,19 @@ export const isDatesRangeValid = (startDate, endDate, type) => {
 
 export const getNotDefaultSortedArray = (daysArray, sort) => {
   console.log(daysArray, sort);
+  if (sort === "size-daily") {
+    const newSortedDaysArray = daysArray.map((day) => {
+      return [
+        ...day,
+        day[1].sort((a, b) => {
+          return (
+            b["estimated_diameter"]["meters"]["estimated_diameter_max"] -
+            a["estimated_diameter"]["meters"]["estimated_diameter_max"]
+          );
+        }),
+      ];
+    });
+    return newSortedDaysArray;
+  }
   return daysArray;
 };

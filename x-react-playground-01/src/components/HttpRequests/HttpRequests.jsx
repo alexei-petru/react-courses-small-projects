@@ -29,6 +29,7 @@ const HttpRequests = () => {
     setErrorState(false);
     setDaysArrayState(false);
     setIsArrayEmpty(false);
+    setSortedOption("day");
 
     try {
       const daysArrays = await getDaysArrayFromAPIHandler();
