@@ -28,3 +28,37 @@ export const getTodayISOFormatedDate = (numberOrEmpty) => {
   }
   return day.toISOString().slice(0, 10);
 };
+
+export const isDatesRangeValid = (startDate, endDate, type) => {
+  const startDateMs = Date.parse(startDate);
+  const endDateMs = Date.parse(endDate);
+  const sevenDays = 7 * 24 * 60 * 60 * 1000;
+
+  if (endDateMs - startDateMs < 0) {
+    return {
+      startDate: type === "STARTDATE" ? startDate : endDate,
+      endDate: type === "STARTDATE" ? startDate : endDate,
+    };
+  }
+
+  if (endDateMs - startDateMs > sevenDays) {
+    if (type === "STARTDATE") {
+      const datePlusSevenDaysISO = getTodayISOFormatedDate(
+        startDateMs + sevenDays
+      );
+      return { startDate: startDate, endDate: datePlusSevenDaysISO };
+    }
+
+    if (type === "ENDDATE") {
+      const datePlusSevenDaysISO = getTodayISOFormatedDate(
+        endDateMs - sevenDays
+      );
+      return { startDate: datePlusSevenDaysISO, endDate: endDate };
+    }
+  }
+};
+
+export const getNotDefaultSortedArray = (daysArray, sort) => {
+  console.log(daysArray, sort);
+  return daysArray;
+};

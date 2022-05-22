@@ -5,11 +5,14 @@ import CounterProvider from "./store/CounterProvider";
 import ReevAndRerendering from "./components/ReevAndRerendering";
 import ClassBasedUsersFinder from "./components/ClassBasedComponents/ClassBasedUsersFinder";
 import HttpRequests from "./components/HttpRequests/HttpRequests";
+import DateProvider from "./store/date/DateProvider";
 
 const App = () => {
   return (
     <div className={classes.container}>
-      <HttpRequests />
+      <DateProvider>
+        <HttpRequests />
+      </DateProvider>
       <CounterProvider>
         <Counter />
       </CounterProvider>

@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import MyInput from "../../../UI/MyInput";
 import classes from "./HttpRequestsDaysForm.module.css";
 import MyButton from "../../../UI/MyButton";
+import { getTodayISOFormatedDate } from "../http-requests-helpers";
+import DateContext from "../../../store/date/date-context";
 
 const HttpRequestsDaysForm = (props) => {
+  const dateCtx = useContext(DateContext);
+
   const selectedStartDateHandler = (event) => {
-    props.onSelectDate({ type: "STARTDATE", value: event.target.value });
+    dateCtx.changeStartDate(event);
   };
 
   const selectedEndDateHandler = (event) => {
-    props.onSelectDate({ type: "ENDDATE", value: event.target.value });
+    dateCtx.changeEndDate(event);
   };
 
   return (
@@ -20,9 +24,9 @@ const HttpRequestsDaysForm = (props) => {
         input={{
           type: "date",
           name: "startDate",
-          value: props.selectedDate.startDate,
+          value: dateCtx.startDate,
           min: "1995-01-01",
-          max: props.getToday(),
+          max: getTodayISOFormatedDate(),
           onChange: selectedStartDateHandler,
           className: classes.startInput,
         }}
@@ -32,10 +36,10 @@ const HttpRequestsDaysForm = (props) => {
         input={{
           type: "date",
           name: "endDate",
-          value: props.selectedDate.endDate,
+          value: dateCtx.endDate,
+          max: getTodayISOFormatedDate(),
           onChange: selectedEndDateHandler,
           className: classes.endInput,
-          max: props.getToday(),
         }}
         label={{ name: "End Date", className: classes["endDateLabel"] }}
       ></MyInput>

@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useContext, useReducer, useState } from "react";
 import LoadingImg from "../../UI/LoadingImg";
 import classes from "./HttpRequests.module.css";
 import HttpRequestsDaysForm from "./HttpRequestsDaysForm/HttpRequestsDaysForm";
@@ -6,91 +6,21 @@ import DaysList from "./DaysList/DaysList";
 import NoAsteroids from "./NoAsteroids/NoAsteroids";
 import {
   compareDaysArrayFromAPI,
-  getTodayISOFormatedDate,
+  getNotDefaultSortedArray,
 } from "./http-requests-helpers";
-
-//log
-
-const isDatesRangeValid = (startDate, endDate, type) => {
-  const startDateMs = Date.parse(startDate);
-  const endDateMs = Date.parse(endDate);
-  const sevenDays = 7 * 24 * 60 * 60 * 1000;
-
-  if (endDateMs - startDateMs < 0) {
-    return {
-      startDate: type === startDate ? startDate : endDate,
-      endDate: type === startDate ? startDate : endDate,
-    };
-  }
-
-  if (endDateMs - startDateMs > sevenDays) {
-    if (type === "STARTDATE") {
-      const datePlusSevenDaysISO = getTodayISOFormatedDate(
-        startDateMs + sevenDays
-      );
-      return { startDate: startDate, endDate: datePlusSevenDaysISO };
-    }
-
-    if (type === "ENDDATE") {
-      const datePlusSevenDaysISO = getTodayISOFormatedDate(
-        endDateMs - sevenDays
-      );
-      return { startDate: datePlusSevenDaysISO, endDate: endDate };
-    }
-  }
-};
-
-const reducer = (state, action) => {
-  if (action.type === "STARTDATE") {
-    const newStartDate = action.value;
-    const datesRange = isDatesRangeValid(
-      action.value,
-      state.endDate,
-      action.type
-    );
-
-    if (datesRange) {
-      return datesRange;
-    } else {
-      return { ...state, startDate: newStartDate };
-    }
-  }
-
-  if (action.type === "ENDDATE") {
-    const newEndDate = action.value;
-    const datesRange = isDatesRangeValid(
-      state.startDate,
-      newEndDate,
-      action.type
-    );
-
-    //fallback
-    if (datesRange) {
-      return datesRange;
-    } else {
-      return { ...state, startDate: newEndDate };
-    }
-  }
-};
+import SortAsteroids from "./SortAsteroids/SortAsteroids";
+import DateContext from "../../store/date/date-context";
 
 const HttpRequests = () => {
-  const initialState = {
-    startDate: getTodayISOFormatedDate(),
-    endDate: getTodayISOFormatedDate(),
-  };
-
-  const [dateState, dispatch] = useReducer(reducer, initialState);
-
+  const dateCtx = useContext(DateContext);
   const [isArrayEmpty, setIsArrayEmpty] = useState(false);
   const [showLoadingImg, setShowLoadingImg] = useState(false);
   const [errorState, setErrorState] = useState(false);
   const [daysArrayState, setDaysArrayState] = useState(false);
+  const [sortedOption, setSortedOption] = useState("day");
 
   const getDaysArrayFromAPIHandler = async () => {
-    return await compareDaysArrayFromAPI(
-      dateState.startDate,
-      dateState.endDate
-    );
+    return await compareDaysArrayFromAPI(dateCtx.startDate, dateCtx.endDate);
   };
 
   const mainResponseHandler = async (event) => {
@@ -113,14 +43,26 @@ const HttpRequests = () => {
     setShowLoadingImg(false);
   };
 
+  const sortOptionHandler = (selectedOption) => {
+    if (daysArrayState.length > 0) {
+      console.log(daysArrayState, "daysArrays");
+      let notDefaultSortedArray = getNotDefaultSortedArray(
+        daysArrayState,
+        selectedOption
+      );
+      setDaysArrayState(notDefaultSortedArray);
+    }
+  };
+
   return (
     <div className={classes.httpRequests}>
-      <HttpRequestsDaysForm
-        onSelectDate={dispatch}
-        selectedDate={dateState}
-        getToday={getTodayISOFormatedDate}
-        onClick={mainResponseHandler}
-      />
+      <HttpRequestsDaysForm onClick={mainResponseHandler} />
+      {daysArrayState && (
+        <SortAsteroids
+          sortedOption={sortedOption}
+          onSortOptionChange={sortOptionHandler}
+        />
+      )}
       <div>
         <LoadingImg
           className={showLoadingImg ? classes.showImg : classes.hideImg}

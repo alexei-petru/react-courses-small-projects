@@ -1,18 +1,18 @@
 import React from "react";
 import classes from "./MyInput.module.css";
 
-const MyInput = (props) => {
+const MyInput = ({ input, label, className }) => {
   return (
-    <div className={[classes.inputWrapper, props.className].join(" ")}>
+    <div className={[classes.inputWrapper, className].join(" ")}>
       <label
-        className={[classes.label, props.label.className].join(" ")}
-        htmlFor={props.input.id}
+        className={[classes.label, label.className].join(" ")}
+        htmlFor={input.id}
       >
-        {props.label.name}
+        {label.name}
       </label>
       <input
-        {...props.input}
-        className={[classes.input, props.input.className].join(" ")}
+        {...input}
+        className={[classes.input, input.className].join(" ")}
       />
     </div>
   );
