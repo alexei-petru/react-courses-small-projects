@@ -44,6 +44,7 @@ const HttpRequests = () => {
   };
 
   const sortOptionHandler = (selectedOption) => {
+    setSortedOption(selectedOption);
     if (daysArrayState.length > 0) {
       console.log(daysArrayState, "daysArrays");
       let notDefaultSortedArray = getNotDefaultSortedArray(
