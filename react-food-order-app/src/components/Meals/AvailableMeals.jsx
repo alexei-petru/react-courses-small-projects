@@ -1,37 +1,68 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../UI/Card";
 import classes from "./AvailableMeals.module.css";
 import MealItem from "./MealItem/MealItem";
 
-const DUMMY_MEALS = [
-  {
-    id: "m1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 22.99,
-  },
-  {
-    id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
-    price: 16.5,
-  },
-  {
-    id: "m3",
-    name: "Barbecue Burger",
-    description: "American, raw, meaty",
-    price: 12.99,
-  },
-  {
-    id: "m4",
-    name: "Green Bowl",
-    description: "Healthy...and green...",
-    price: 18.99,
-  },
-];
+// const DUMMY_MEALS = [
+//   {
+//     id: "m1",
+//     name: "Sushi",
+//     description: "Finest fish and veggies",
+//     price: 22.99,
+//   },
+//   {
+//     id: "m2",
+//     name: "Schnitzel",
+//     description: "A german specialty!",
+//     price: 16.5,
+//   },
+//   {
+//     id: "m3",
+//     name: "Barbecue Burger",
+//     description: "American, raw, meaty",
+//     price: 12.99,
+//   },
+//   {
+//     id: "m4",
+//     name: "Green Bowl",
+//     description: "Healthy...and green...",
+//     price: 18.99,
+//   },
+// ];
 
 const AvailableMeals = () => {
-  const mealsList = DUMMY_MEALS.map((meal) => (
+  const [meals, setMeals] = useState([]);
+  const [httpError, setHttpError] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchMeals = async () => {
+      const response = await fetch(
+        "https://linen-flux-304509-default-rtdb.europe-west1.firebasedatabase.app/meals.json"
+      );
+      if (!response.ok) {
+        throw new Error("something went wrong");
+      }
+      const responseData = await response.json();
+      const loadedMeals = [];
+      for (const key in responseData) {
+        loadedMeals.push({
+          id: key,
+          name: responseData[key].name,
+          description: responseData[key].description,
+          price: responseData[key].price,
+        });
+        setIsLoading(false);
+      }
+      setMeals(loadedMeals);
+    };
+    fetchMeals().catch((error) => {
+      setIsLoading(false);
+      setHttpError(error.message);
+    });
+  }, []);
+
+  const mealsList = meals.map((meal) => (
     <MealItem
       key={meal.id}
       id={meal.id}
@@ -40,6 +71,14 @@ const AvailableMeals = () => {
       price={meal.price}
     />
   ));
+
+  if (httpError) {
+    return <p>{httpError}</p>;
+  }
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <section className={classes.meals}>

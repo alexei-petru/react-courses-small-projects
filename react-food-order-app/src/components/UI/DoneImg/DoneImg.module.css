@@ -1,0 +1,17 @@
+.img-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.done-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  user-select: none;
+  opacity: 1;
+}
+
+.done-img-show {
+  opacity: 1;
+  transition: all 0.2s ease-out;
+}
