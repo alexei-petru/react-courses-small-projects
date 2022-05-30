@@ -19,7 +19,7 @@ const Checkout = (props) => {
     const isValid = (value) => value.trim().length > 0;
     const isFiveChrLong = (value) => value.trim().length === 5;
 
-    //correct variant
+    // user inputs verification
     // const enteredName = nameInputRef.current.value;
     // const enteredStreet = streetInputRef.current.value;
     // const enteredPostal = postalInputRef.current.value;

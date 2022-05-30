@@ -1,10 +1,10 @@
-import { useMemo, useState } from "react";
-import PostForm from "./components/PostForm";
-import PostList from "./components/PostList";
+import { useState } from "react";
+import PostForm from "./components/PostForm/PostForm";
+import PostList from "./components/PostList/PostList";
 import classes from "./App.module.css";
-import PostFilter from "./components/PostFilter";
-import MyModal from "./components/UI/MyModal";
-import MyButton from "./components/UI/MyButton";
+import PostFilter from "./components/PostFilter/PostFilter";
+import MyModal from "./components/UI/MyModal/MyModal";
+import MyButton from "./components/UI/MyButton/MyButton";
 import { usePosts } from "./hooks/usePosts";
 
 function App() {

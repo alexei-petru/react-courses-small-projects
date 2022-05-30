@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import PostItem from "./PostItem";
+import PostItem from "../PostItem/PostItem";
 import classes from "./PostList.module.css";
 import "./PostListTransitionGroup.css";
 import { TransitionGroup, CSSTransition } from "react-transition-group";

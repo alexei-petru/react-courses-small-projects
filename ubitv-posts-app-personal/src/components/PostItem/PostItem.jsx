@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./PostItem.module.css";
-import MyButton from "./UI/MyButton";
+import MyButton from "../UI/MyButton/MyButton";
 
 const PostItem = (props) => {
   return (
