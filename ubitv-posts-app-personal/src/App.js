@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PostForm from "./components/PostForm/PostForm";
 import PostList from "./components/PostList/PostList";
 import classes from "./App.module.css";
@@ -6,7 +6,7 @@ import PostFilter from "./components/PostFilter/PostFilter";
 import MyModal from "./components/UI/MyModal/MyModal";
 import MyButton from "./components/UI/MyButton/MyButton";
 import { usePosts } from "./hooks/usePosts";
-import axios from "axios";
+import PostService from "./API/PostService";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -28,13 +28,15 @@ function App() {
   const removePostHandler = (post) => {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
-
+  
   const fetchPosts = async () => {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts"
-    );
-    setPosts(response.data);
+    const posts = await PostService.getAll();
+    setPosts(posts);
   };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <div className={classes.App}>
