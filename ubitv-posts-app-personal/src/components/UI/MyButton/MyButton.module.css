@@ -8,3 +8,9 @@
 .myButton:hover {
   transform: scale(1.1);
 }
+
+.active {
+  border: 2px solid rgb(199, 36, 0);
+  margin: 0 7px 0 5px;
+  transform: scale(1.2);
+}

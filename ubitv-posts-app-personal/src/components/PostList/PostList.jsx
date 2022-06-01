@@ -44,7 +44,7 @@ const PostList = ({ posts, ...props }) => {
           <CSSTransition key={post.id} timeout={500} classNames={"post"}>
             <PostItem
               onRemovePost={props.onRemovePost}
-              number={index + 1}
+              number={post.id}
               post={post}
             />
           </CSSTransition>
