@@ -4,6 +4,12 @@ const Sort = () => {
   const sortList = ["популярности", "цене", "алфавиту"];
   const [activeSort, setActiveSort] = useState("популярности");
   const [isSortOpen, setIsSortOpen] = useState(false);
+
+  const sortListItemHandler = (sortItem) => {
+    setActiveSort(sortItem);
+    setIsSortOpen((prev) => !prev);
+  };
+
   return (
     <div className="sort">
       <div
@@ -26,11 +32,11 @@ const Sort = () => {
         <span>{activeSort}</span>
       </div>
       {isSortOpen && (
-        <div onClick={() => setIsSortOpen(true)} className="sort__popup">
+        <div className="sort__popup">
           <ul>
             {sortList.map((item) => (
               <li
-                onClick={() => setActiveSort(item)}
+                onClick={() => sortListItemHandler(item)}
                 key={item}
                 className={activeSort === item ? "active" : ""}
               >
