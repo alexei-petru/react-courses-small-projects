@@ -8,6 +8,11 @@ const Home = () => {
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [sortType, setSortType] = useState({
+    name: "популярности",
+    sortProperty: "rating",
+  });
+
   const fetchPizzas = async () => {
     const response = await fetch(
       "https://629de0ce3dda090f3c0dda82.mockapi.io/pizzas"
@@ -25,7 +30,10 @@ const Home = () => {
     <>
       <div className="content__top">
         <Categories />
-        <Sort />
+        <Sort
+          sortType={sortType}
+          onChangeSort={(sortObj) => setSortType(sortObj)}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
