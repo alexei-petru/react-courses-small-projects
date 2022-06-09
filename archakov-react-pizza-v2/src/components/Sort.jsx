@@ -2,9 +2,12 @@ import React, { useState } from "react";
 
 const Sort = ({ sortType, onChangeSort }) => {
   const sortList = [
-    { name: "популярности", sortProperty: "rating" },
-    { name: "цене", sortProperty: "price" },
-    { name: "алфавиту", sortProperty: "title" },
+    { name: "популярности (ASC)", sortProperty: "rating" },
+    { name: "популярности (DESC)", sortProperty: "-rating" },
+    { name: "цене (ASC)", sortProperty: "price" },
+    { name: "цене (DESC)", sortProperty: "-price" },
+    { name: "алфавиту (ASC)", sortProperty: "title" },
+    { name: "алфавиту (DESC)", sortProperty: "-title" },
   ];
   const [isSortOpen, setIsSortOpen] = useState(false);
 
@@ -42,7 +45,9 @@ const Sort = ({ sortType, onChangeSort }) => {
                 onClick={() => sortListItemHandler(sortItem)}
                 key={sortItem.sortProperty}
                 className={
-                  sortType.sortProperty === sortItem.sortProperty ? "active" : ""
+                  sortType.sortProperty === sortItem.sortProperty
+                    ? "active"
+                    : ""
                 }
               >
                 {sortItem.name}
