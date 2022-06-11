@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { SearchContext } from "../../App";
 import classes from "./Search.module.css";
-import ReactPaginate from "react-paginate";
 
-const Search = ({ searchedValue, setSearchedValue }) => {
+const Search = () => {
+  const { searchedValue, setSearchedValue } = useContext(SearchContext);
   return (
     <div className={classes["search-wrapper"]}>
       <input
