@@ -1,0 +1,19 @@
+.pagination-wrapper li {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.pagination-wrapper li a {
+  border: 1px solid gray;
+  padding: 10px;
+  border-radius: 5px;
+  user-select: none;
+}
+
+.pagination-wrapper :global .selected a {
+  color: white;
+  background-color: #fe5f1e;
+}
