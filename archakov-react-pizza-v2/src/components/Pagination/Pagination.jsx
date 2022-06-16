@@ -1,8 +1,11 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
+import { useSelector } from "react-redux";
 import classes from "./Pagination.module.css";
 
-const Pagination = ({ pageCount, onPageChange }) => {
+const Pagination = ({ onPageChange }) => {
+  const pageCount = useSelector((state) => state.filterReducer.pageCount);
+
   const handlePageClick = (event) => {
     onPageChange(event.selected + 1);
   };

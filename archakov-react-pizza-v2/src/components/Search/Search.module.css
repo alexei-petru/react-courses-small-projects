@@ -1,3 +1,7 @@
+.search-wrapper {
+  position: relative;
+}
+
 .search-input {
   padding: 10px;
   border: 1px solid gray;
@@ -8,4 +12,14 @@
   max-width: 300px;
   font-size: 18px;
   margin-left: 20px;
+}
+
+.clear-input {
+  font-size: 30px;
+  font-weight: 500;
+  position: absolute;
+  right: 12px;
+  top: 2px;
+  cursor: pointer;
+  /* margin-right: 20px; */
 }

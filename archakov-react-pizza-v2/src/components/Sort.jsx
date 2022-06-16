@@ -1,23 +1,38 @@
 import React, { useState } from "react";
+import { useRef } from "react";
+import { useEffect } from "react";
+
+const sortList = [
+  { name: "популярности (ASC)", sortProperty: "rating" },
+  { name: "популярности (DESC)", sortProperty: "-rating" },
+  { name: "цене (ASC)", sortProperty: "price" },
+  { name: "цене (DESC)", sortProperty: "-price" },
+  { name: "алфавиту (ASC)", sortProperty: "title" },
+  { name: "алфавиту (DESC)", sortProperty: "-title" },
+];
 
 const Sort = ({ sortType, onChangeSort }) => {
-  const sortList = [
-    { name: "популярности (ASC)", sortProperty: "rating" },
-    { name: "популярности (DESC)", sortProperty: "-rating" },
-    { name: "цене (ASC)", sortProperty: "price" },
-    { name: "цене (DESC)", sortProperty: "-price" },
-    { name: "алфавиту (ASC)", sortProperty: "title" },
-    { name: "алфавиту (DESC)", sortProperty: "-title" },
-  ];
   const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortRef = useRef();
 
   const sortListItemHandler = (sortItem) => {
     onChangeSort(sortItem);
     setIsSortOpen((prev) => !prev);
   };
 
+  useEffect(() => {
+    const closeSortHandler = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        setIsSortOpen(false);
+      }
+    };
+    document.body.addEventListener("click", closeSortHandler);
+
+    return () => document.body.removeEventListener("click", closeSortHandler);
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div
         onClick={() => setIsSortOpen((prev) => !prev)}
         className="sort__label"

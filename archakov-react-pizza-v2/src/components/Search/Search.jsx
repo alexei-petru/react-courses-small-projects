@@ -1,18 +1,42 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { SearchContext } from "../../App";
 import classes from "./Search.module.css";
 
 const Search = () => {
-  const { searchedValue, setSearchedValue } = useContext(SearchContext);
+  const [searchedLocalValue, setSearchedLocalValue] = useState("");
+
+  const { setSearchedValue } = useContext(SearchContext);
+  const inputRef = useRef();
+
+  const clearInputHandler = () => {
+    setSearchedValue("");
+    inputRef.current.focus();
+  };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setSearchedValue(searchedLocalValue);
+    }, 300);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [searchedLocalValue]);
+
   return (
     <div className={classes["search-wrapper"]}>
       <input
         className={classes["search-input"]}
-        value={searchedValue}
-        onChange={(event) => setSearchedValue(event.target.value)}
+        ref={inputRef}
+        value={searchedLocalValue}
+        onChange={(event) => setSearchedLocalValue(event.target.value)}
         placeholder="Search pizza"
         type="text"
       />
+      <div onClick={clearInputHandler} className={classes["clear-input"]}>
+        x
+      </div>
     </div>
   );
 };

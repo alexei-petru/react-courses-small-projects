@@ -1,10 +1,16 @@
 import { useCallback, useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { SearchContext } from "../App";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Sort from "../components/Sort";
+import {
+  setCategoryId,
+  setSort,
+  setPageCount,
+} from "../Redux/slices/filterSlice";
 
 const Home = () => {
   const { searchedValue } = useContext(SearchContext);
@@ -12,14 +18,21 @@ const Home = () => {
   const [pizzas, setPizzas] = useState([]);
   const [isLoading, setIsLoading] = useState();
 
-  const [activeCategory, setActiveCategory] = useState(false);
-  const [sortType, setSortType] = useState({
-    name: "популярности",
-    sortProperty: "rating",
-  });
-  const [pageCount, setPageCount] = useState(0);
+  const activeCategory = useSelector((state) => state.filterReducer.categoryId);
+  const dispatchCategory = useDispatch();
+  const changeCategoryHandler = (category) => {
+    dispatchCategory(setCategoryId(category));
+  };
+
+  const sortType = useSelector((state) => state.filterReducer.sort);
+  const dispatchSort = useDispatch();
+  const changeSortHandler = (sortObj) => {
+    dispatchSort(setSort(sortObj));
+  };
+
   const [selectedPage, setSelectedPage] = useState(1);
   const itemsPerPage = 4;
+  const dispatch = useDispatch();
 
   const category = activeCategory ? `category=${activeCategory}` : "";
   const sortBy = sortType.sortProperty.replace("-", "");
@@ -34,7 +47,8 @@ const Home = () => {
     );
     const data = await response.json();
     setPizzas(data.items);
-    setPageCount(Math.ceil(data.count / itemsPerPage));
+    const responsePageCount = Math.ceil(data.count / itemsPerPage);
+    dispatch(setPageCount(responsePageCount));
     setIsLoading(false);
   }, [category, sortBy, order, search, page]);
 
@@ -47,12 +61,9 @@ const Home = () => {
       <div className="content__top">
         <Categories
           activeCategory={activeCategory}
-          onChangeCategory={(category) => setActiveCategory(category)}
+          onChangeCategory={changeCategoryHandler}
         />
-        <Sort
-          sortType={sortType}
-          onChangeSort={(sortObj) => setSortType(sortObj)}
-        />
+        <Sort sortType={sortType} onChangeSort={changeSortHandler} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
@@ -60,7 +71,7 @@ const Home = () => {
           ? [...Array(6)].map((_, index) => <Skeleton key={index} />)
           : pizzas.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
       </div>
-      <Pagination onPageChange={setSelectedPage} pageCount={pageCount} />
+      <Pagination onPageChange={setSelectedPage} />
     </>
   );
 };
