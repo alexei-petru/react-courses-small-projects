@@ -1,9 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const isFindItemById = (stateItems, payloadId) => {
+  return stateItems.find((itemObj) => itemObj.id === payloadId);
+};
+
+const isFindItemByType = (stateItems, payload) => {
+  return stateItems.find(
+    (itemObj) =>
+      itemObj.id === payload.Id &&
+      itemObj.typeName === payload.typeName &&
+      itemObj.size === payload.size
+  );
+};
+
 const initialState = {
   totalItemsCount: 0,
   totalSum: 0,
   items: [],
+  countById: {},
 };
 
 const cartSlice = createSlice({
@@ -11,23 +25,28 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addCartItem(state, action) {
-      const findedItemId = state.items.find(
+      // console.log("stateItems", state.items);
+      // console.log("statePayload", action.payload);
+      // const findedItemId = isFindItemById(state.items, action.payload.id);
+      // const findedItemType = isFindItemByType(state.items, action.payload);
+      const foundItemById = state.items.find(
         (itemObj) => itemObj.id === action.payload.id
       );
-      const findedItemType = state.items.find(
+
+      const foundItemByType = state.items.find(
         (itemObj) =>
-          findedItemId &&
+          foundItemById &&
           itemObj.typeName === action.payload.typeName &&
           itemObj.size === action.payload.size
       );
 
-      if (findedItemType) {
-        findedItemType.countPerType++;
+      if (foundItemByType) {
+        foundItemByType.countPerType++;
       }
-      if (findedItemId) {
-        findedItemId.countPerId++;
+      if (foundItemById) {
+        foundItemById.countPerId++;
       }
-      if (!findedItemId || !findedItemType) {
+      if (!foundItemById || !foundItemByType) {
         state.items.push(action.payload);
       }
 
@@ -52,9 +71,7 @@ const cartSlice = createSlice({
         findedItem.countPerType--;
       }
     },
-    removeCartItem(state, action) {
-      
-    },
+    removeCartItem(state, action) {},
     clearCart(state) {
       if (window.confirm("All cart items will be delete. Are you sure?")) {
         state.totalItemsCount = 0;
