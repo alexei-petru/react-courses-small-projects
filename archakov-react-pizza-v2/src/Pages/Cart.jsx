@@ -1,15 +1,21 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ArrowLeftSvg from "../assets/ArrowLeftSvg";
 import CartSvg from "../assets/CartSvg";
 import TrashSvg from "../assets/TrashSvg";
 import CartItem from "../components/CartItem";
+import { clearCart } from "../Redux/slices/cartSlice";
 
 const Cart = () => {
   const { totalItemsCount, totalSum, items } = useSelector(
     (state) => state.cartReducer
   );
-  console.log("items", items);
+  const dispatch = useDispatch();
+
+  const clearCartHandler = () => {
+    dispatch(clearCart());
+  };
+
   return (
     <div className="container container--cart">
       <div className="cart">
@@ -18,7 +24,7 @@ const Cart = () => {
             <CartSvg />
             Корзина
           </h2>
-          <div className="cart__clear">
+          <div onClick={clearCartHandler} className="cart__clear">
             <TrashSvg />
             <span>Очистить корзину</span>
           </div>

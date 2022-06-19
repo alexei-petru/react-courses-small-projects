@@ -10,15 +10,15 @@ const cartSlice = createSlice({
   name: "cartSlice",
   initialState,
   reducers: {
-    addCartItem(state, actions) {
+    addCartItem(state, action) {
       const findedItemId = state.items.find(
-        (itemObj) => itemObj.id === actions.payload.id
+        (itemObj) => itemObj.id === action.payload.id
       );
       const findedItemType = state.items.find(
         (itemObj) =>
           findedItemId &&
-          itemObj.typeName === actions.payload.typeName &&
-          itemObj.size === actions.payload.size
+          itemObj.typeName === action.payload.typeName &&
+          itemObj.size === action.payload.size
       );
 
       if (findedItemType) {
@@ -28,7 +28,7 @@ const cartSlice = createSlice({
         findedItemId.countPerId++;
       }
       if (!findedItemId || !findedItemType) {
-        state.items.push(actions.payload);
+        state.items.push(action.payload);
       }
 
       state.totalItemsCount = state.items.reduce(
@@ -41,9 +41,30 @@ const cartSlice = createSlice({
         0
       );
     },
+    decreaseCartItem(state, action) {
+      const findedItem = state.items.find(
+        (itemObj) =>
+          itemObj.id === action.payload.id &&
+          itemObj.typeName === action.payload.typeName &&
+          itemObj.size === action.payload.size
+      );
+      if (findedItem.countPerType !== 1) {
+        findedItem.countPerType--;
+      }
+    },
+    removeCartItem(state, action) {
+      
+    },
+    clearCart(state) {
+      if (window.confirm("All cart items will be delete. Are you sure?")) {
+        state.totalItemsCount = 0;
+        state.totalSum = 0;
+        state.items = [];
+      }
+    },
   },
 });
 
-export const { addCartItem } = cartSlice.actions;
+export const { addCartItem, decreaseCartItem, clearCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -18,6 +18,7 @@ const PizzaBlock = ({ id, imageUrl, title, price, sizes }) => {
     const addedItem = {
       id,
       title,
+      imageUrl,
       price,
       typeName: activeType,
       size: activeSize,

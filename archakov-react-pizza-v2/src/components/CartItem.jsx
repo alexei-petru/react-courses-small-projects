@@ -1,16 +1,32 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import MinusSvg from "../assets/MinusSvg";
 import PlusSvg from "../assets/PlusSvg";
+import { addCartItem, decreaseCartItem } from "../Redux/slices/cartSlice";
 
-const CartItem = ({ price, title, countPerType, size, typeName }) => {
+const CartItem = ({
+  id,
+  price,
+  title,
+  imageUrl,
+  countPerType,
+  size,
+  typeName,
+}) => {
+  const dispatch = useDispatch();
+
+  const increaseCartItemHandler = () => {
+    dispatch(addCartItem({ id, size, typeName }));
+  };
+
+  const decreaseCartItemHandler = () => {
+    dispatch(decreaseCartItem({ id, size, typeName }));
+  };
+
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img
-          className="pizza-block__image"
-          src="https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-          alt="Pizza"
-        />
+        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
@@ -19,11 +35,17 @@ const CartItem = ({ price, title, countPerType, size, typeName }) => {
         </p>
       </div>
       <div className="cart__item-count">
-        <div className="button button--outline button--circle cart__item-count-minus">
+        <div
+          onClick={decreaseCartItemHandler}
+          className="button button--outline button--circle cart__item-count-minus"
+        >
           <MinusSvg />
         </div>
         <b>{countPerType}</b>
-        <div className="button button--outline button--circle cart__item-count-plus">
+        <div
+          onClick={increaseCartItemHandler}
+          className="button button--outline button--circle cart__item-count-plus"
+        >
           <PlusSvg />
         </div>
       </div>
