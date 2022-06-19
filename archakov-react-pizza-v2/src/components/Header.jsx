@@ -4,7 +4,9 @@ import pizzaLogo from "../assets/pizza-logo.svg";
 import Search from "./Search/Search";
 
 const Header = () => {
-  const { totalCount, items } = useSelector((state) => state.cartReducer);
+  const { totalItemsCount, totalSum, items } = useSelector(
+    (state) => state.cartReducer
+  );
 
   return (
     <div className="header">
@@ -21,7 +23,7 @@ const Header = () => {
         </div>
         <div className="header__cart">
           <Link to="cart" className="button button--cart">
-            <span>{totalCount} ₽</span>
+            <span>{totalSum} ₽</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -52,7 +54,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>{items.length}</span>
+            <span>{totalItemsCount}</span>
           </Link>
         </div>
       </div>
