@@ -7,10 +7,7 @@ const PizzaBlock = ({ id, imageUrl, title, price, sizes }) => {
   const [activeType, setActiveType] = useState(typeNames[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
 
-  const cartItem = useSelector((state) =>
-    state.cartReducer.items.find((obj) => obj.id === id)
-  );
-  const countPerId = cartItem ? cartItem.countPerId : false;
+  const countPerId = useSelector((state) => state.cartReducer.countById[id]);
 
   const dispatch = useDispatch();
 
@@ -22,7 +19,6 @@ const PizzaBlock = ({ id, imageUrl, title, price, sizes }) => {
       price,
       typeName: activeType,
       size: activeSize,
-      countPerId: 1,
       countPerType: 1,
     };
     dispatch(addCartItem(addedItem));

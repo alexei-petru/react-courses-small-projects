@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ArrowLeftSvg from "../assets/ArrowLeftSvg";
 import CartSvg from "../assets/CartSvg";

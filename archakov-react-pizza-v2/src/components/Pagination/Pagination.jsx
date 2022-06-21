@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import classes from "./Pagination.module.css";
 
 const Pagination = ({ onPageChange }) => {
-  const pageCount = useSelector((state) => state.filterReducer.pageCount);
+  const { pageCount } = useSelector((state) => state.pizzaReducer);
 
   const handlePageClick = (event) => {
     onPageChange(event.selected + 1);

@@ -11,7 +11,7 @@ const sortList = [
   { name: "алфавиту (DESC)", sortProperty: "-title" },
 ];
 
-const Sort = ({ sortType, onChangeSort }) => {
+const Sort = ({ sort, onChangeSort }) => {
   const [isSortOpen, setIsSortOpen] = useState(false);
   const sortRef = useRef();
 
@@ -50,7 +50,7 @@ const Sort = ({ sortType, onChangeSort }) => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>{sortType.name}</span>
+        <span>{sort.name}</span>
       </div>
       {isSortOpen && (
         <div className="sort__popup">
@@ -60,9 +60,7 @@ const Sort = ({ sortType, onChangeSort }) => {
                 onClick={() => sortListItemHandler(sortItem)}
                 key={sortItem.sortProperty}
                 className={
-                  sortType.sortProperty === sortItem.sortProperty
-                    ? "active"
-                    : ""
+                  sort.sortProperty === sortItem.sortProperty ? "active" : ""
                 }
               >
                 {sortItem.name}
