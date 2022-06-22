@@ -45,6 +45,6 @@ const pizzaSlice = createSlice({
   },
 });
 
-export const {setSelectedPage} = pizzaSlice.actions;
+export const { setSelectedPage } = pizzaSlice.actions;
 
 export default pizzaSlice.reducer;

@@ -1,23 +1,24 @@
-import React, { useContext, useRef } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import { SearchContext } from "../../App";
+import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { setPizzaSearch } from "../../Redux/slices/filterSlice";
 import classes from "./Search.module.css";
 
 const Search = () => {
   const [searchedLocalValue, setSearchedLocalValue] = useState("");
 
-  const { setSearchedValue } = useContext(SearchContext);
+  const dispatch = useDispatch();
+
   const inputRef = useRef();
 
   const clearInputHandler = () => {
-    setSearchedValue("");
+    setSearchedLocalValue("");
+    dispatch(setPizzaSearch(""));
     inputRef.current.focus();
   };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setSearchedValue(searchedLocalValue);
+      dispatch(setPizzaSearch(searchedLocalValue));
     }, 300);
     return () => {
       clearTimeout(timeout);

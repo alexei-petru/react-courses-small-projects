@@ -1,12 +1,17 @@
 # features to add
-`install axios`
-`clear search input and focus`
+15m lect15
+`if window location has something save it in redux, that will make a request and should render page with saved properties, `
+`too much effects see what they are doing `
+
+
+
+## mby future
 `debounce with lodash and without it` npm i lodash.debounce
 
 
 
-
-
-//////////
-### `npm run build` fails to minify
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### example MD
+`fails to minify`
+This section has moved here:
+ [https-fails-to-minify](https)
+  [](https)
