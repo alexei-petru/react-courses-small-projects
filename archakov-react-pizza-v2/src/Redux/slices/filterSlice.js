@@ -22,9 +22,16 @@ const filterSlice = createSlice({
     setSort(state, actions) {
       state.sort = actions.payload;
     },
+    setParams(state, action) {
+      state.pizzaSearch = action.payload.search;
+      console.log("payload", action.payload);
+      state.activeCategory = action.payload.category;
+      state.sort = action.payload.sort;
+    },
   },
 });
 
-export const { setCategoryId, setSort, setPizzaSearch } = filterSlice.actions;
+export const { setCategoryId, setSort, setPizzaSearch, setParams } =
+  filterSlice.actions;
 
 export default filterSlice.reducer;

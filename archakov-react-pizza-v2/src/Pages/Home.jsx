@@ -5,8 +5,8 @@ import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
-import Sort from "../components/Sort";
-import { setCategoryId, setSort } from "../Redux/slices/filterSlice";
+import Sort, { sortList } from "../components/Sort";
+import { setCategoryId, setSort, setParams } from "../Redux/slices/filterSlice";
 import { fetchPizza, setSelectedPage } from "../Redux/slices/pizzaSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -34,13 +34,23 @@ const Home = () => {
   useEffect(() => {
     const url = window.location.search;
     if (url) {
+      console.log("url has been found");
       const urlObj = qs.parse(url.substring(1));
+      const sortObj = sortList.find(
+        (obj) => obj.sortProperty === urlObj.sortBy
+      );
       console.log("urlObj", urlObj);
-      
+      dispatch(
+        setParams({
+          ...urlObj,
+          category: urlObj.category.slice(-2),
+          sort: sortObj,
+        })
+      );
     }
   }, []);
 
-  const category = activeCategory ? `category=${activeCategory}` : "";
+  const category = activeCategory ? `category=${activeCategory}` : 0;
   const sortBy = sort.sortProperty.replace("-", "");
   const order = sort.sortProperty.includes("-") ? "desc" : "asc";
   const search = searchedValue ? `&search=${searchedValue}` : "";
@@ -56,8 +66,8 @@ const Home = () => {
 
   useEffect(() => {
     const string = qs.stringify({ category, sortBy, order, search, page });
+    console.log("category", category);
     navigate(`?${string}`);
-    console.log({ category, sortBy, order, search, page });
   }, [category, sortBy, order, search, page]);
 
   return (

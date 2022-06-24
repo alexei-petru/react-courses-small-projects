@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 
-const sortList = [
+export const sortList = [
   { name: "популярности (ASC)", sortProperty: "rating" },
   { name: "популярности (DESC)", sortProperty: "-rating" },
   { name: "цене (ASC)", sortProperty: "price" },
