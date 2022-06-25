@@ -1,20 +1,28 @@
 import qs from "qs";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Sort, { sortList } from "../components/Sort";
-import { setCategoryId, setSort, setParams } from "../Redux/slices/filterSlice";
-import { fetchPizza, setSelectedPage } from "../Redux/slices/pizzaSlice";
-import { useNavigate } from "react-router-dom";
+import {
+  setCategoryId,
+  setFilters,
+  setSelectedPage,
+  setSort,
+} from "../Redux/slices/filterSlice";
+import { fetchPizza } from "../Redux/slices/pizzaSlice";
 
 const Home = () => {
+  const isFirstRenderDone = useRef(false);
   const navigate = useNavigate();
-  const searchedValue = useSelector((state) => state.filterReducer.pizzaSearch);
+  const { pizzaSearch: searchedValue, selectedPage } = useSelector(
+    (state) => state.filterReducer
+  );
   const dispatch = useDispatch();
-  const { data, status, itemsPerPage, selectedPage } = useSelector(
+  const { data, status, itemsPerPage } = useSelector(
     (state) => state.pizzaReducer
   );
 
@@ -31,6 +39,57 @@ const Home = () => {
     dispatch(setSelectedPage(page));
   };
 
+  const urlCategory = activeCategory ? `category=${activeCategory}` : 0;
+  const urlSortBy = sort.sortProperty.replace("-", "");
+  const urlOrder = sort.sortProperty.includes("-") ? "desc" : "asc";
+  const UrlSearch = searchedValue ? `&search=${searchedValue}` : "";
+  const UrlPage = `&page=${selectedPage}&limit=${itemsPerPage}`;
+
+  //insert url link when props will change
+  useEffect(() => {
+    console.log("first render");
+    if (isFirstRenderDone.current) {
+      console.log("inside render");
+      const string = qs.stringify({
+        activeCategory,
+        sortBy: sort.sortProperty,
+        order: urlOrder,
+        search: searchedValue,
+        page: selectedPage,
+      });
+      navigate(`?${string}`);
+    }
+  }, [
+    sort.sortProperty,
+    activeCategory,
+    urlOrder,
+    searchedValue,
+    selectedPage,
+  ]);
+
+  //get pizza with props from redux
+  const getPizza = useCallback(async () => {
+    dispatch(
+      fetchPizza({
+        category: urlCategory,
+        sortBy: urlSortBy,
+        order: urlOrder,
+        search: UrlSearch,
+        page: UrlPage,
+      })
+    );
+  }, [urlCategory, urlSortBy, urlOrder, UrlSearch, UrlPage]);
+
+  //fetch pizza when value from redux will change but not on first time
+  useEffect(() => {
+    // console.log("isParseUrlDone.current", isParseUrlDone.current);
+    if (isFirstRenderDone.current) {
+      // console.log("123");
+      getPizza();
+    }
+  }, [activeCategory, sort, searchedValue, selectedPage, getPizza]);
+
+  //*only first time parsing from url change redux and then mark as parsed
   useEffect(() => {
     const url = window.location.search;
     if (url) {
@@ -41,34 +100,16 @@ const Home = () => {
       );
       console.log("urlObj", urlObj);
       dispatch(
-        setParams({
+        setFilters({
           ...urlObj,
-          category: urlObj.category.slice(-2),
           sort: sortObj,
         })
       );
+    } else {
+      getPizza();
     }
+    isFirstRenderDone.current = true;
   }, []);
-
-  const category = activeCategory ? `category=${activeCategory}` : 0;
-  const sortBy = sort.sortProperty.replace("-", "");
-  const order = sort.sortProperty.includes("-") ? "desc" : "asc";
-  const search = searchedValue ? `&search=${searchedValue}` : "";
-  const page = `&page=${selectedPage}&limit=${itemsPerPage}`;
-
-  const getPizza = useCallback(async () => {
-    dispatch(fetchPizza({ category, sortBy, order, search, page }));
-  }, [category, sortBy, order, search, page]);
-
-  useEffect(() => {
-    getPizza();
-  }, [activeCategory, sort, searchedValue, selectedPage, getPizza]);
-
-  useEffect(() => {
-    const string = qs.stringify({ category, sortBy, order, search, page });
-    console.log("category", category);
-    navigate(`?${string}`);
-  }, [category, sortBy, order, search, page]);
 
   return (
     <>

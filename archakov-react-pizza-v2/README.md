@@ -1,7 +1,8 @@
 # features to add
 15m lect15
-`if window location has something save it in redux, that will make a request and should render page with saved properties, `
-`too much effects see what they are doing `
+
+`on first render if url has something in it dispatch to redux`
+`that will make the component rerender and fetch with  `
 
 
 

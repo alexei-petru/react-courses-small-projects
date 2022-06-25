@@ -17,17 +17,12 @@ const initialState = {
   pageCount: 1,
   status: "pending",
   itemsPerPage: 4,
-  selectedPage: 1,
 };
 
 const pizzaSlice = createSlice({
   name: "pizzaSlice",
   initialState,
-  reducers: {
-    setSelectedPage(state, action) {
-      state.selectedPage = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchPizza.pending]: (state, action) => {
       state.status = "pending";
@@ -44,7 +39,5 @@ const pizzaSlice = createSlice({
     },
   },
 });
-
-export const { setSelectedPage } = pizzaSlice.actions;
 
 export default pizzaSlice.reducer;
