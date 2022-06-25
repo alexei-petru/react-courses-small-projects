@@ -1,6 +1,6 @@
 import React from "react";
 
-const cartSvg = () => {
+const CartSvg = () => {
   return (
     <svg
       width="18"
@@ -34,4 +34,4 @@ const cartSvg = () => {
   );
 };
 
-export default cartSvg;
+export default CartSvg;

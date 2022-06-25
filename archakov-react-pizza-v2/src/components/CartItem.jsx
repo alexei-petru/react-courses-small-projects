@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import MinusSvg from "../assets/MinusSvg";
 import PlusSvg from "../assets/PlusSvg";
 import { addCartItem, decreaseCartItem } from "../Redux/slices/cartSlice";
@@ -26,7 +27,9 @@ const CartItem = ({
   return (
     <div className="cart__item">
       <div className="cart__item-img">
-        <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        <Link to={`/pizza/${id}`}>
+          <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        </Link>
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>

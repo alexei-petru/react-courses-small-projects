@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Cart from "./Pages/Cart";
 import Home from "./Pages/Home";
 import NotFound from "./Pages/NotFound";
+import PizzaPage from "./Pages/PizzaPage";
 import "./scss/app.scss";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="cart" element={<Cart />} />
+            <Route path="/pizza/:id" element={<PizzaPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
