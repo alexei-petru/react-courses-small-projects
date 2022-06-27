@@ -7,7 +7,7 @@ import { clearCart } from "../Redux/slices/cartSlice";
 
 const Cart = () => {
   const { totalItemsCount, totalSum, items } = useSelector(
-    (state) => state.cartReducer
+    (state: any) => state.cartReducer
   );
   const dispatch = useDispatch();
 
@@ -29,7 +29,7 @@ const Cart = () => {
           </div>
         </div>
         <div className="cart__content__items">
-          {items.map((item) => (
+          {items.map((item: any) => (
             <CartItem
               key={`${item.id + item.size + item.typeName}`}
               {...item}

@@ -5,7 +5,17 @@ import MinusSvg from "../assets/MinusSvg";
 import PlusSvg from "../assets/PlusSvg";
 import { addCartItem, decreaseCartItem } from "../Redux/slices/cartSlice";
 
-const CartItem = ({
+type CartItemProps = {
+  id: number;
+  price: number;
+  title: string;
+  imageUrl: string;
+  countPerType: number;
+  size: number;
+  typeName: string;
+};
+
+const CartItem: React.FC<CartItemProps> = ({
   id,
   price,
   title,

@@ -15,27 +15,32 @@ import {
 } from "../Redux/slices/filterSlice";
 import { fetchPizza } from "../Redux/slices/pizzaSlice";
 
-const Home = () => {
+const Home: React.FC = () => {
   const isFirstRenderDone = useRef(false);
   const navigate = useNavigate();
   const { pizzaSearch: searchedValue, selectedPage } = useSelector(
-    (state) => state.filterReducer
+    (state: any) => state.filterReducer
   );
   const dispatch = useDispatch();
-  const { data, status, itemsPerPage } = useSelector(
-    (state) => state.pizzaReducer
+  const { data, status, itemsPerPage }: any = useSelector(
+    (state: any) => state.pizzaReducer
   );
 
-  const { activeCategory, sort } = useSelector((state) => state.filterReducer);
-  const changeCategoryHandler = (category) => {
+  const { activeCategory, sort } = useSelector(
+    (state: any) => state.filterReducer
+  );
+  const changeCategoryHandler = (category: number) => {
     dispatch(setCategoryId(category));
   };
 
-  const changeSortHandler = (sortObj) => {
+  const changeSortHandler = (sortObj: {
+    name: string;
+    sortProperty: string;
+  }) => {
     dispatch(setSort(sortObj));
   };
 
-  const setSelectedPageHandler = (page) => {
+  const setSelectedPageHandler = (page: number) => {
     dispatch(setSelectedPage(page));
   };
 
@@ -47,9 +52,7 @@ const Home = () => {
 
   //insert url link when props will change
   useEffect(() => {
-    console.log("first render");
     if (isFirstRenderDone.current) {
-      console.log("inside render");
       const string = qs.stringify({
         activeCategory,
         sortBy: sort.sortProperty,
@@ -70,6 +73,7 @@ const Home = () => {
   //get pizza with props from redux
   const getPizza = useCallback(async () => {
     dispatch(
+      //@ts-ignore
       fetchPizza({
         category: urlCategory,
         sortBy: urlSortBy,
@@ -93,12 +97,10 @@ const Home = () => {
   useEffect(() => {
     const url = window.location.search;
     if (url) {
-      console.log("url has been found");
       const urlObj = qs.parse(url.substring(1));
       const sortObj = sortList.find(
         (obj) => obj.sortProperty === urlObj.sortBy
       );
-      console.log("urlObj", urlObj);
       dispatch(
         setFilters({
           ...urlObj,
@@ -118,6 +120,7 @@ const Home = () => {
           activeCategory={activeCategory}
           onChangeCategory={changeCategoryHandler}
         />
+        {/* @ts-ignore */}
         <Sort sort={sort} onChangeSort={changeSortHandler} />
       </div>
       <h2 className="content__title">Bce пиццы</h2>
@@ -125,7 +128,9 @@ const Home = () => {
         {status === "pending" &&
           [...Array(6)].map((_, index) => <Skeleton key={index} />)}
         {status === "succeeded" && data.items.length !== 0 ? (
-          data.items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)
+          data.items.map((pizza: any) => (
+            <PizzaBlock key={pizza.id} {...pizza} />
+          ))
         ) : (
           <h3>No pizza has been found</h3>
         )}

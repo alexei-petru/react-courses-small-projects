@@ -3,11 +3,15 @@ import ReactPaginate from "react-paginate";
 import { useSelector } from "react-redux";
 import classes from "./Pagination.module.css";
 
-const Pagination = ({ onPageChange }) => {
-  const { pageCount } = useSelector((state) => state.pizzaReducer);
+type PaginationProps = {
+  onPageChange: (pageNumber: number) => void;
+};
 
-  const handlePageClick = (event) => {
-    onPageChange(event.selected + 1);
+const Pagination: React.FC<PaginationProps> = ({ onPageChange }) => {
+  const { pageCount } = useSelector((state: any) => state.pizzaReducer);
+
+  const handlePageClick = (selectedObj: { selected: number }) => {
+    onPageChange(selectedObj.selected + 1);
   };
 
   return (
@@ -19,7 +23,6 @@ const Pagination = ({ onPageChange }) => {
       pageRangeDisplayed={5}
       pageCount={pageCount}
       previousLabel="< previous"
-      renderOnZeroPageCount={null}
     />
   );
 };

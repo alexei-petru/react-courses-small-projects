@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { useRef } from "react";
 import { useEffect } from "react";
 
-export const sortList = [
+type SortListType = {
+  name: string;
+  sortProperty: string;
+};
+
+export const sortList: SortListType[] = [
   { name: "популярности (ASC)", sortProperty: "rating" },
   { name: "популярности (DESC)", sortProperty: "-rating" },
   { name: "цене (ASC)", sortProperty: "price" },
@@ -11,17 +16,22 @@ export const sortList = [
   { name: "алфавиту (DESC)", sortProperty: "-title" },
 ];
 
-const Sort = ({ sort, onChangeSort }) => {
-  const [isSortOpen, setIsSortOpen] = useState(false);
-  const sortRef = useRef();
+type SortProps = {
+  sort: { name: string; sortProperty: string };
+  onChangeSort: (sortItem: SortListType) => void;
+};
 
-  const sortListItemHandler = (sortItem) => {
+const Sort: React.FC<SortProps> = ({ sort, onChangeSort }) => {
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  const sortListItemHandler = (sortItem: SortListType) => {
     onChangeSort(sortItem);
     setIsSortOpen((prev) => !prev);
   };
 
   useEffect(() => {
-    const closeSortHandler = (event) => {
+    const closeSortHandler = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setIsSortOpen(false);
       }

@@ -3,10 +3,13 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-const PizzaPage = () => {
-  const [pizza, setPizza] = useState();
+const PizzaPage: React.FC = () => {
+  const [pizza, setPizza] = useState<{
+    title: string;
+    imageUrl: string;
+    price: number;
+  }>();
   const { id: paramsId } = useParams();
-  console.log(paramsId);
 
   useEffect(() => {
     const fetchPizza = async () => {

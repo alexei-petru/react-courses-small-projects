@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 
-const Categories = ({ activeCategory, onChangeCategory }) => {
+type CategoriesProps = {
+  activeCategory: number;
+  onChangeCategory: (idx: number) => void;
+};
+
+const Categories: React.FC<CategoriesProps> = ({
+  activeCategory,
+  onChangeCategory,
+}) => {
   const categoriesNames = [
     "Все",
     "Мясные",

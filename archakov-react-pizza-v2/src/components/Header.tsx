@@ -5,12 +5,11 @@ import pizzaLogo from "../assets/pizza-logo.svg";
 import Search from "./Search/Search";
 
 const Header = () => {
-  const { totalItemsCount, totalSum, items } = useSelector(
-    (state) => state.cartReducer
+  const { totalItemsCount, totalSum } = useSelector(
+    (state: any) => state.cartReducer
   );
 
   const location = useLocation();
-  console.log("location", location);
 
   return (
     <div className="header">

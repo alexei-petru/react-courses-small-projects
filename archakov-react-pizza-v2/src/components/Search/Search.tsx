@@ -3,17 +3,17 @@ import { useDispatch } from "react-redux";
 import { setPizzaSearch } from "../../Redux/slices/filterSlice";
 import classes from "./Search.module.css";
 
-const Search = () => {
+const Search: React.FC = () => {
   const [searchedLocalValue, setSearchedLocalValue] = useState("");
 
   const dispatch = useDispatch();
 
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const clearInputHandler = () => {
     setSearchedLocalValue("");
     dispatch(setPizzaSearch(""));
-    inputRef.current.focus();
+    if (inputRef.current) inputRef.current.focus();
   };
 
   useEffect(() => {
