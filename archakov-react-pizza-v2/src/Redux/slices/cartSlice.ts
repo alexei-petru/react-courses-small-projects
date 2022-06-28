@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
 
-const findItemByType = (stateItems, payload) => {
+const findItemByType = (stateItems: CartItem[], payload: any) => {
   return stateItems.find(
     (itemObj) =>
       itemObj.id === payload.id &&
@@ -9,15 +9,32 @@ const findItemByType = (stateItems, payload) => {
   );
 };
 
-const calculateItemsCount = (items) => {
+const calculateItemsCount = (items: CartItem[]) => {
   return items.reduce((acc, obj) => acc + obj.countPerType, 0);
 };
 
-const calculateTotalSum = (items) => {
+const calculateTotalSum = (items: CartItem[]) => {
   return items.reduce((acc, obj) => acc + obj.price * obj.countPerType, 0);
 };
 
-const initialState = {
+type CartItem = {
+  id: number;
+  price: number;
+  title: string;
+  imageUrl: string;
+  countPerType: number;
+  size: number;
+  typeName: string;
+};
+
+interface CartSliceState {
+  totalItemsCount: number;
+  totalSum: number;
+  items: CartItem[];
+  countById: any;
+}
+
+const initialState: CartSliceState = {
   totalItemsCount: 0,
   totalSum: 0,
   items: [],
@@ -28,7 +45,7 @@ const cartSlice = createSlice({
   name: "cartSlice",
   initialState,
   reducers: {
-    addCartItem(state, action) {
+    addCartItem(state: CartSliceState, action) {
       const foundItemByType = findItemByType(state.items, action.payload);
 
       let count = state.countById[action.payload.id];
@@ -50,7 +67,7 @@ const cartSlice = createSlice({
     decreaseCartItem(state, action) {
       const foundItemByType = findItemByType(state.items, action.payload);
 
-      if (foundItemByType.countPerType === 1) {
+      if (!foundItemByType || foundItemByType.countPerType === 1) {
         return;
       }
 
