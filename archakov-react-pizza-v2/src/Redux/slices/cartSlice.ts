@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Slice } from "@reduxjs/toolkit";
 
-const findItemByType = (stateItems: CartItem[], payload: any) => {
+const findItemByType = (stateItems: CartItem[], payload: CartItem) => {
   return stateItems.find(
     (itemObj) =>
       itemObj.id === payload.id &&
@@ -45,7 +45,7 @@ const cartSlice = createSlice({
   name: "cartSlice",
   initialState,
   reducers: {
-    addCartItem(state: CartSliceState, action) {
+    addCartItem(state: CartSliceState, action: PayloadAction<CartItem>) {
       const foundItemByType = findItemByType(state.items, action.payload);
 
       let count = state.countById[action.payload.id];
@@ -64,7 +64,7 @@ const cartSlice = createSlice({
       state.totalItemsCount = calculateItemsCount(state.items);
       state.totalSum = calculateTotalSum(state.items);
     },
-    decreaseCartItem(state, action) {
+    decreaseCartItem(state, action: PayloadAction<CartItem>) {
       const foundItemByType = findItemByType(state.items, action.payload);
 
       if (!foundItemByType || foundItemByType.countPerType === 1) {
@@ -77,7 +77,7 @@ const cartSlice = createSlice({
       state.totalItemsCount = calculateItemsCount(state.items);
       state.totalSum = calculateTotalSum(state.items);
     },
-    removeCartItem(state, action) {
+    removeCartItem(state, action: PayloadAction<CartItem>) {
       delete state.countById[action.payload.id];
     },
     clearCart(state) {

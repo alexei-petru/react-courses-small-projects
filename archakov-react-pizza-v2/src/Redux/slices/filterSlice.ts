@@ -1,6 +1,22 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
+type filterSliceState = {
+  pizzaSearch: string;
+  activeCategory: number;
+  sort: {
+    name: string;
+    sortProperty:
+      | "rating"
+      | "-rating"
+      | "price"
+      | "-price"
+      | "title"
+      | "-title";
+  };
+  selectedPage: number;
+};
+
+const initialState: filterSliceState = {
   pizzaSearch: "",
   activeCategory: 0,
   sort: {
@@ -14,22 +30,22 @@ const filterSlice = createSlice({
   name: "filterSlice",
   initialState,
   reducers: {
-    setCategoryId(state, actions) {
-      state.activeCategory = actions.payload;
+    setCategoryId(state, action: PayloadAction<number>) {
+      state.activeCategory = action.payload;
     },
-    setPizzaSearch(state, action) {
+    setPizzaSearch(state, action: PayloadAction<string>) {
       state.pizzaSearch = action.payload;
     },
-    setSort(state, actions) {
-      state.sort = actions.payload;
+    setSort(state, action) {
+      state.sort = action.payload;
     },
-    setFilters(state, action) {
-      if (action.payload.search !== "") {
-        state.pizzaSearch = action.payload.search;
+    setFilters(state, action: PayloadAction<filterSliceState>) {
+      if (action.payload.pizzaSearch !== "") {
+        state.pizzaSearch = action.payload.pizzaSearch;
       }
       state.activeCategory = Number(action.payload.activeCategory);
       state.sort = action.payload.sort;
-      state.selectedPage = Number(action.payload.page);
+      state.selectedPage = Number(action.payload.selectedPage);
     },
     setSelectedPage(state, action) {
       state.selectedPage = action.payload;

@@ -14,21 +14,23 @@ import {
   setSort,
 } from "../Redux/slices/filterSlice";
 import { fetchPizza } from "../Redux/slices/pizzaSlice";
+import { RootState } from "../Redux/store";
 
 const Home: React.FC = () => {
   const isFirstRenderDone = useRef(false);
   const navigate = useNavigate();
-  const { pizzaSearch: searchedValue, selectedPage } = useSelector(
-    (state: any) => state.filterReducer
-  );
   const dispatch = useDispatch();
-  const { data, status, itemsPerPage }: any = useSelector(
-    (state: any) => state.pizzaReducer
+
+  const {
+    pizzaSearch: searchedValue,
+    selectedPage,
+    activeCategory,
+    sort,
+  } = useSelector((state: RootState) => state.filterReducer);
+  const { data, status, itemsPerPage } = useSelector(
+    (state: RootState) => state.pizzaReducer
   );
 
-  const { activeCategory, sort } = useSelector(
-    (state: any) => state.filterReducer
-  );
   const changeCategoryHandler = (category: number) => {
     dispatch(setCategoryId(category));
   };
@@ -44,7 +46,7 @@ const Home: React.FC = () => {
     dispatch(setSelectedPage(page));
   };
 
-  const urlCategory = activeCategory ? `category=${activeCategory}` : 0;
+  const urlCategory: any = activeCategory ? activeCategory : 0;
   const urlSortBy = sort.sortProperty.replace("-", "");
   const urlOrder = sort.sortProperty.includes("-") ? "desc" : "asc";
   const UrlSearch = searchedValue ? `&search=${searchedValue}` : "";
@@ -73,13 +75,13 @@ const Home: React.FC = () => {
   //get pizza with props from redux
   const getPizza = useCallback(async () => {
     dispatch(
-      //@ts-ignore
+      // @ts-ignore
       fetchPizza({
-        category: urlCategory,
-        sortBy: urlSortBy,
+        activeCategory: urlCategory,
+        sort: urlSortBy,
         order: urlOrder,
-        search: UrlSearch,
-        page: UrlPage,
+        pizzaSearch: UrlSearch,
+        selectedPage: UrlPage,
       })
     );
   }, [urlCategory, urlSortBy, urlOrder, UrlSearch, UrlPage]);
