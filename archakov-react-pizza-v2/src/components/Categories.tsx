@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 type CategoriesProps = {
-  activeCategory: number;
-  onChangeCategory: (idx: number) => void;
+  activeCategory: string;
+  onChangeCategory: (idx: string) => void;
 };
 
 const Categories: React.FC<CategoriesProps> = ({
@@ -22,10 +22,12 @@ const Categories: React.FC<CategoriesProps> = ({
       <ul>
         {categoriesNames.map((category, index) => (
           <li
-            onClick={() => onChangeCategory(index)}
+            onClick={() => onChangeCategory(`${index}`)}
             key={category}
             className={
-              categoriesNames[activeCategory] === category ? "active" : ""
+              categoriesNames[Number(activeCategory)] === category
+                ? "active"
+                : ""
             }
           >
             {category}

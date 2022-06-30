@@ -31,7 +31,7 @@ const Home: React.FC = () => {
     (state: RootState) => state.pizzaReducer
   );
 
-  const changeCategoryHandler = (category: number) => {
+  const changeCategoryHandler = (category: string) => {
     dispatch(setCategoryId(category));
   };
 
@@ -46,7 +46,8 @@ const Home: React.FC = () => {
     dispatch(setSelectedPage(page));
   };
 
-  const urlCategory: any = activeCategory ? activeCategory : 0;
+  const urlCategory =
+    activeCategory && activeCategory != "0" ? `category=${activeCategory}` : "";
   const urlSortBy = sort.sortProperty.replace("-", "");
   const urlOrder = sort.sortProperty.includes("-") ? "desc" : "asc";
   const UrlSearch = searchedValue ? `&search=${searchedValue}` : "";
@@ -56,7 +57,7 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (isFirstRenderDone.current) {
       const string = qs.stringify({
-        activeCategory,
+        urlCategory,
         sortBy: sort.sortProperty,
         order: urlOrder,
         search: searchedValue,
@@ -74,6 +75,7 @@ const Home: React.FC = () => {
 
   //get pizza with props from redux
   const getPizza = useCallback(async () => {
+    console.log({ urlCategory, urlSortBy, urlOrder, UrlSearch, UrlPage });
     dispatch(
       // @ts-ignore
       fetchPizza({
@@ -88,9 +90,7 @@ const Home: React.FC = () => {
 
   //fetch pizza when value from redux will change but not on first time
   useEffect(() => {
-    // console.log("isParseUrlDone.current", isParseUrlDone.current);
     if (isFirstRenderDone.current) {
-      // console.log("123");
       getPizza();
     }
   }, [activeCategory, sort, searchedValue, selectedPage, getPizza]);
@@ -103,12 +103,14 @@ const Home: React.FC = () => {
       const sortObj = sortList.find(
         (obj) => obj.sortProperty === urlObj.sortBy
       );
-      dispatch(
-        setFilters({
-          ...urlObj,
-          sort: sortObj,
-        })
-      );
+      if (sortObj) {
+        dispatch(
+          setFilters({
+            ...urlObj,
+            sort: sortObj,
+          })
+        );
+      }
     } else {
       getPizza();
     }
@@ -119,7 +121,7 @@ const Home: React.FC = () => {
     <>
       <div className="content__top">
         <Categories
-          activeCategory={activeCategory}
+          activeCategory={activeCategory || "0"}
           onChangeCategory={changeCategoryHandler}
         />
         {/* @ts-ignore */}
@@ -130,9 +132,7 @@ const Home: React.FC = () => {
         {status === "pending" &&
           [...Array(6)].map((_, index) => <Skeleton key={index} />)}
         {status === "succeeded" && data.items.length !== 0 ? (
-          data.items.map((pizza: any) => (
-            <PizzaBlock key={pizza.id} {...pizza} />
-          ))
+          data.items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)
         ) : (
           <h3>No pizza has been found</h3>
         )}

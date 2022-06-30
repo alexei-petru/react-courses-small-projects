@@ -1,24 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export type SortItemType = {
+  name: string;
+  sortProperty: "rating" | "-rating" | "price" | "-price" | "title" | "-title";
+};
+
 type filterSliceState = {
-  pizzaSearch: string;
-  activeCategory: number;
-  sort: {
-    name: string;
-    sortProperty:
-      | "rating"
-      | "-rating"
-      | "price"
-      | "-price"
-      | "title"
-      | "-title";
-  };
-  selectedPage: number;
+  pizzaSearch?: string;
+  activeCategory?: string;
+  sort: SortItemType;
+  selectedPage?: number;
 };
 
 const initialState: filterSliceState = {
   pizzaSearch: "",
-  activeCategory: 0,
+  activeCategory: "",
   sort: {
     name: "популярности (ASC)",
     sortProperty: "rating",
@@ -30,7 +26,7 @@ const filterSlice = createSlice({
   name: "filterSlice",
   initialState,
   reducers: {
-    setCategoryId(state, action: PayloadAction<number>) {
+    setCategoryId(state, action: PayloadAction<string>) {
       state.activeCategory = action.payload;
     },
     setPizzaSearch(state, action: PayloadAction<string>) {
@@ -43,7 +39,7 @@ const filterSlice = createSlice({
       if (action.payload.pizzaSearch !== "") {
         state.pizzaSearch = action.payload.pizzaSearch;
       }
-      state.activeCategory = Number(action.payload.activeCategory);
+      state.activeCategory = action.payload.activeCategory;
       state.sort = action.payload.sort;
       state.selectedPage = Number(action.payload.selectedPage);
     },

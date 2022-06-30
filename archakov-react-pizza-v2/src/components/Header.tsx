@@ -2,11 +2,12 @@ import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import CartSvg from "../assets/CartSvg";
 import pizzaLogo from "../assets/pizza-logo.svg";
+import { RootState } from "../Redux/store";
 import Search from "./Search/Search";
 
 const Header = () => {
   const { totalItemsCount, totalSum } = useSelector(
-    (state: any) => state.cartReducer
+    (state: RootState) => state.cartReducer
   );
 
   const location = useLocation();

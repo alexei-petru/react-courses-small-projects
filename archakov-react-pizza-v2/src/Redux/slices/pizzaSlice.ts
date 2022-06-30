@@ -4,16 +4,18 @@ import axios from "axios";
 export const fetchPizza = createAsyncThunk(
   "pizzaSlice/fetchPizzas",
   async (params: Record<string, string>) => {
-    const { category, sortBy, order, search, page } = params;
+    console.log("params", params);
+    const { activeCategory, sort, order, pizzaSearch, selectedPage } = params;
     const { data } = await axios.get<Data>(
-      `https://629de0ce3dda090f3c0dda82.mockapi.io/pizzas?${category}&sortBy=${sortBy}&order=${order}${search}${page}`
+      `https://629de0ce3dda090f3c0dda82.mockapi.io/pizzas?${activeCategory}&sortBy=${sort}&order=${order}${pizzaSearch}${selectedPage}`
     );
+    console.log("data", data);
     return data;
   }
 );
 
 export type PizzaItem = {
-  category: number;
+  category: string;
   id: string;
   imageUrl: string;
   price: number;
@@ -23,7 +25,7 @@ export type PizzaItem = {
   types: number[];
 };
 
-export type Data = [count?: number, items?: PizzaItem[]];
+export type Data = { count: number; items: PizzaItem[] };
 
 interface PizzaSliceState {
   data: Data;
@@ -32,8 +34,24 @@ interface PizzaSliceState {
   itemsPerPage: number;
 }
 
+const itemsInitialState = [
+  {
+    category: "",
+    id: "",
+    imageUrl: "",
+    price: 0,
+    rating: [],
+    sizes: [],
+    title: "",
+    types: [],
+  },
+];
+
 const initialState: PizzaSliceState = {
-  data: [],
+  data: {
+    count: 0,
+    items: itemsInitialState,
+  },
   pageCount: 1,
   status: "pending",
   itemsPerPage: 4,
@@ -44,22 +62,27 @@ const pizzaSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchPizza.pending, (state, action) => {
-      // The type signature on action.payload matches what we passed into the generic for `normalize`, allowing us to access specific properties on `payload.articles` if desired
-      state.status = "pending";
-      state.data = [];
-    }),
+    return (
+      builder.addCase(fetchPizza.pending, (state) => {
+        state.status = "pending";
+        state.data = {
+          count: 0,
+          items: itemsInitialState,
+        };
+      }),
       builder.addCase(fetchPizza.fulfilled, (state, action) => {
-        // The type signature on action.payload matches what we passed into the generic for `normalize`, allowing us to access specific properties on `payload.articles` if desired
         state.status = "succeeded";
         state.data = action.payload;
         state.pageCount = Math.ceil(state.data.count / state.itemsPerPage);
       }),
-      builder.addCase(fetchPizza.rejected, (state, action) => {
-        // The type signature on action.payload matches what we passed into the generic for `normalize`, allowing us to access specific properties on `payload.articles` if desired
+      builder.addCase(fetchPizza.rejected, (state) => {
         state.status = "failed";
-        state.data = [];
-      });
+        state.data = {
+          count: 0,
+          items: itemsInitialState,
+        };
+      })
+    );
   },
 });
 

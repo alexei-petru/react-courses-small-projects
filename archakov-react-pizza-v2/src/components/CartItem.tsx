@@ -6,7 +6,7 @@ import PlusSvg from "../assets/PlusSvg";
 import { addCartItem, decreaseCartItem } from "../Redux/slices/cartSlice";
 
 type CartItemProps = {
-  id: number;
+  id: string;
   price: number;
   title: string;
   imageUrl: string;
@@ -27,11 +27,23 @@ const CartItem: React.FC<CartItemProps> = ({
   const dispatch = useDispatch();
 
   const increaseCartItemHandler = () => {
-    dispatch(addCartItem({ id, size, typeName }));
+    dispatch(
+      addCartItem({ id, size, typeName, price, title, imageUrl, countPerType })
+    );
   };
 
   const decreaseCartItemHandler = () => {
-    dispatch(decreaseCartItem({ id, size, typeName }));
+    dispatch(
+      decreaseCartItem({
+        id,
+        size,
+        typeName,
+        price,
+        title,
+        imageUrl,
+        countPerType,
+      })
+    );
   };
 
   return (

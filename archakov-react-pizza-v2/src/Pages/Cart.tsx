@@ -4,10 +4,11 @@ import CartSvg from "../assets/CartSvg";
 import TrashSvg from "../assets/TrashSvg";
 import CartItem from "../components/CartItem";
 import { clearCart } from "../Redux/slices/cartSlice";
+import { RootState } from "../Redux/store";
 
 const Cart = () => {
   const { totalItemsCount, totalSum, items } = useSelector(
-    (state: any) => state.cartReducer
+    (state: RootState) => state.cartReducer
   );
   const dispatch = useDispatch();
 
@@ -29,7 +30,7 @@ const Cart = () => {
           </div>
         </div>
         <div className="cart__content__items">
-          {items.map((item: any) => (
+          {items.map((item) => (
             <CartItem
               key={`${item.id + item.size + item.typeName}`}
               {...item}

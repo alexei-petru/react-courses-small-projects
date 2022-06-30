@@ -18,7 +18,7 @@ const calculateTotalSum = (items: CartItem[]) => {
 };
 
 type CartItem = {
-  id: number;
+  id: string;
   price: number;
   title: string;
   imageUrl: string;

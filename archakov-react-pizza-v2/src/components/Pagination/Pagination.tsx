@@ -1,6 +1,7 @@
 import React from "react";
 import ReactPaginate from "react-paginate";
 import { useSelector } from "react-redux";
+import { RootState } from "../../Redux/store";
 import classes from "./Pagination.module.css";
 
 type PaginationProps = {
@@ -8,7 +9,7 @@ type PaginationProps = {
 };
 
 const Pagination: React.FC<PaginationProps> = ({ onPageChange }) => {
-  const { pageCount } = useSelector((state: any) => state.pizzaReducer);
+  const { pageCount } = useSelector((state: RootState) => state.pizzaReducer);
 
   const handlePageClick = (selectedObj: { selected: number }) => {
     onPageChange(selectedObj.selected + 1);

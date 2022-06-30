@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addCartItem } from "../../Redux/slices/cartSlice";
+import { RootState } from "../../Redux/store";
 
 type PizzaBlockProps = {
-  id: number;
+  id: string;
   imageUrl: string;
   title: string;
   price: number;
@@ -23,7 +24,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   const [activeSize, setActiveSize] = useState(sizes[0]);
 
   const countPerId = useSelector(
-    (state: any) => state.cartReducer.countById[id]
+    (state: RootState) => state.cartReducer.countById[id]
   );
 
   const dispatch = useDispatch();
