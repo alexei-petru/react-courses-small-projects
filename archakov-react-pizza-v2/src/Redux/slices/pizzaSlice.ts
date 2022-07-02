@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchPizza = createAsyncThunk(
+export const fetchPizza = createAsyncThunk<Data, Record<string, string>>(
   "pizzaSlice/fetchPizzas",
   async (params: Record<string, string>) => {
-    console.log("params", params);
+    // console.log("params", params);
     const { activeCategory, sort, order, pizzaSearch, selectedPage } = params;
+    console.log("activeCategory", activeCategory);
+
     const { data } = await axios.get<Data>(
       `https://629de0ce3dda090f3c0dda82.mockapi.io/pizzas?${activeCategory}&sortBy=${sort}&order=${order}${pizzaSearch}${selectedPage}`
     );
@@ -27,10 +29,16 @@ export type PizzaItem = {
 
 export type Data = { count: number; items: PizzaItem[] };
 
+enum Status {
+  PENDING = "pending",
+  SUCCEEDED = "succeeded",
+  FAILED = "failed",
+}
+
 interface PizzaSliceState {
   data: Data;
   pageCount: number;
-  status: "pending" | "succeeded" | "failed";
+  status: Status;
   itemsPerPage: number;
 }
 
@@ -53,7 +61,7 @@ const initialState: PizzaSliceState = {
     items: itemsInitialState,
   },
   pageCount: 1,
-  status: "pending",
+  status: Status.PENDING,
   itemsPerPage: 4,
 };
 
@@ -64,19 +72,19 @@ const pizzaSlice = createSlice({
   extraReducers: (builder) => {
     return (
       builder.addCase(fetchPizza.pending, (state) => {
-        state.status = "pending";
+        state.status = Status.PENDING;
         state.data = {
           count: 0,
           items: itemsInitialState,
         };
       }),
       builder.addCase(fetchPizza.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = Status.SUCCEEDED;
         state.data = action.payload;
         state.pageCount = Math.ceil(state.data.count / state.itemsPerPage);
       }),
       builder.addCase(fetchPizza.rejected, (state) => {
-        state.status = "failed";
+        state.status = Status.FAILED;
         state.data = {
           count: 0,
           items: itemsInitialState,

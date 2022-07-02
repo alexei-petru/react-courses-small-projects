@@ -3,6 +3,7 @@
 `need to fix fetching from parsed url`
 
 
+
 `to type a function we need to specify what this function is returning and what arguments she takes  `onChangeCategory: (idx: number) => void;`
 
 `for optional elements arg1?:number`

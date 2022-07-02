@@ -12,14 +12,24 @@ import {
   setFilters,
   setSelectedPage,
   setSort,
+  SortItemType,
 } from "../Redux/slices/filterSlice";
 import { fetchPizza } from "../Redux/slices/pizzaSlice";
-import { RootState } from "../Redux/store";
+import { RootState, useAppDispatch } from "../Redux/store";
+
+export type UrlObj = {
+  order?: string;
+  page?: string;
+  search?: string;
+  category?: string;
+  sortBy?: string;
+  sort?: SortItemType;
+};
 
 const Home: React.FC = () => {
   const isFirstRenderDone = useRef(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     pizzaSearch: searchedValue,
@@ -53,11 +63,11 @@ const Home: React.FC = () => {
   const UrlSearch = searchedValue ? `&search=${searchedValue}` : "";
   const UrlPage = `&page=${selectedPage}&limit=${itemsPerPage}`;
 
-  //insert url link when props will change
+  //stringify url link when props will change
   useEffect(() => {
     if (isFirstRenderDone.current) {
       const string = qs.stringify({
-        urlCategory,
+        category: activeCategory,
         sortBy: sort.sortProperty,
         order: urlOrder,
         search: searchedValue,
@@ -76,8 +86,8 @@ const Home: React.FC = () => {
   //get pizza with props from redux
   const getPizza = useCallback(async () => {
     console.log({ urlCategory, urlSortBy, urlOrder, UrlSearch, UrlPage });
+
     dispatch(
-      // @ts-ignore
       fetchPizza({
         activeCategory: urlCategory,
         sort: urlSortBy,
@@ -99,11 +109,12 @@ const Home: React.FC = () => {
   useEffect(() => {
     const url = window.location.search;
     if (url) {
-      const urlObj = qs.parse(url.substring(1));
+      const urlObj: UrlObj = qs.parse(url.substring(1));
       const sortObj = sortList.find(
         (obj) => obj.sortProperty === urlObj.sortBy
       );
       if (sortObj) {
+        console.log("urlObj", urlObj);
         dispatch(
           setFilters({
             ...urlObj,

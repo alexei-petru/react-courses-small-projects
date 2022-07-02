@@ -10,6 +10,9 @@ type PaginationProps = {
 
 const Pagination: React.FC<PaginationProps> = ({ onPageChange }) => {
   const { pageCount } = useSelector((state: RootState) => state.pizzaReducer);
+  const { selectedPage } = useSelector(
+    (state: RootState) => state.filterReducer
+  );
 
   const handlePageClick = (selectedObj: { selected: number }) => {
     onPageChange(selectedObj.selected + 1);
@@ -24,6 +27,7 @@ const Pagination: React.FC<PaginationProps> = ({ onPageChange }) => {
       pageRangeDisplayed={5}
       pageCount={pageCount}
       previousLabel="< previous"
+      forcePage={Number(selectedPage - 1)}
     />
   );
 };

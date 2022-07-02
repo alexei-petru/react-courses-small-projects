@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { UrlObj } from "../../Pages/Home";
 
 export type SortItemType = {
   name: string;
@@ -9,12 +10,12 @@ type filterSliceState = {
   pizzaSearch?: string;
   activeCategory?: string;
   sort: SortItemType;
-  selectedPage?: number;
+  selectedPage: number;
 };
 
 const initialState: filterSliceState = {
   pizzaSearch: "",
-  activeCategory: "",
+  activeCategory: "0",
   sort: {
     name: "популярности (ASC)",
     sortProperty: "rating",
@@ -28,6 +29,7 @@ const filterSlice = createSlice({
   reducers: {
     setCategoryId(state, action: PayloadAction<string>) {
       state.activeCategory = action.payload;
+      state.selectedPage = 1;
     },
     setPizzaSearch(state, action: PayloadAction<string>) {
       state.pizzaSearch = action.payload;
@@ -35,13 +37,18 @@ const filterSlice = createSlice({
     setSort(state, action) {
       state.sort = action.payload;
     },
-    setFilters(state, action: PayloadAction<filterSliceState>) {
-      if (action.payload.pizzaSearch !== "") {
-        state.pizzaSearch = action.payload.pizzaSearch;
+    setFilters(state, action: PayloadAction<UrlObj>) {
+      if (action.payload.search !== "") {
+        state.pizzaSearch = action.payload.search;
       }
-      state.activeCategory = action.payload.activeCategory;
-      state.sort = action.payload.sort;
-      state.selectedPage = Number(action.payload.selectedPage);
+      if (action.payload.sort) {
+        state.sort = action.payload.sort;
+      }
+      state.activeCategory = action.payload.category;
+
+      if (action.payload.page) {
+        state.selectedPage = Number(action.payload.page);
+      }
     },
     setSelectedPage(state, action) {
       state.selectedPage = action.payload;

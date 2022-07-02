@@ -31,7 +31,7 @@ interface CartSliceState {
   totalItemsCount: number;
   totalSum: number;
   items: CartItem[];
-  countById: any;
+  countById: { [key: string]: number };
 }
 
 const initialState: CartSliceState = {
@@ -63,6 +63,7 @@ const cartSlice = createSlice({
       }
       state.totalItemsCount = calculateItemsCount(state.items);
       state.totalSum = calculateTotalSum(state.items);
+      console.log(state.countById);
     },
     decreaseCartItem(state, action: PayloadAction<CartItem>) {
       const foundItemByType = findItemByType(state.items, action.payload);
