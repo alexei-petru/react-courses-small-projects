@@ -41,9 +41,17 @@ const Home: React.FC = () => {
     (state: RootState) => state.pizzaReducer
   );
 
-  const changeCategoryHandler = (category: string) => {
+  // useEffect(() => {
+  //   if (isFirstRenderDone.current) {
+  //     const dataString = JSON.stringify(data);
+  //     localStorage.setItem("data", dataString);
+  //     console.log(localStorage);
+  //   }
+  // }, [data]);
+
+  const changeCategoryHandler = useCallback((category: string) => {
     dispatch(setCategoryId(category));
-  };
+  }, []);
 
   const changeSortHandler = (sortObj: {
     name: string;
@@ -85,8 +93,6 @@ const Home: React.FC = () => {
 
   //get pizza with props from redux
   const getPizza = useCallback(async () => {
-    console.log({ urlCategory, urlSortBy, urlOrder, UrlSearch, UrlPage });
-
     dispatch(
       fetchPizza({
         activeCategory: urlCategory,
@@ -114,7 +120,6 @@ const Home: React.FC = () => {
         (obj) => obj.sortProperty === urlObj.sortBy
       );
       if (sortObj) {
-        console.log("urlObj", urlObj);
         dispatch(
           setFilters({
             ...urlObj,

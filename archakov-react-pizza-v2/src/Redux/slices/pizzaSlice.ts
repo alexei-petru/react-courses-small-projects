@@ -4,14 +4,11 @@ import axios from "axios";
 export const fetchPizza = createAsyncThunk<Data, Record<string, string>>(
   "pizzaSlice/fetchPizzas",
   async (params: Record<string, string>) => {
-    // console.log("params", params);
     const { activeCategory, sort, order, pizzaSearch, selectedPage } = params;
-    console.log("activeCategory", activeCategory);
 
     const { data } = await axios.get<Data>(
       `https://629de0ce3dda090f3c0dda82.mockapi.io/pizzas?${activeCategory}&sortBy=${sort}&order=${order}${pizzaSearch}${selectedPage}`
     );
-    console.log("data", data);
     return data;
   }
 );

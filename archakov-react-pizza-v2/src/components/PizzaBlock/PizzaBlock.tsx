@@ -24,7 +24,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   const [activeSize, setActiveSize] = useState(sizes[0]);
 
   const countPerId = useSelector(
-    (state: RootState) => state.cartReducer.countById[id]
+    (state: RootState) => state.cartReducer.countPerPizzaBlock[id]
   );
 
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
       price,
       typeName: activeType,
       size: activeSize,
-      countPerType: 1,
+      pizzaCountUniqueType: 1,
     };
     dispatch(addCartItem(addedItem));
   };

@@ -10,7 +10,7 @@ type CartItemProps = {
   price: number;
   title: string;
   imageUrl: string;
-  countPerType: number;
+  pizzaCountUniqueType: number;
   size: number;
   typeName: string;
 };
@@ -20,7 +20,7 @@ const CartItem: React.FC<CartItemProps> = ({
   price,
   title,
   imageUrl,
-  countPerType,
+  pizzaCountUniqueType,
   size,
   typeName,
 }) => {
@@ -28,7 +28,15 @@ const CartItem: React.FC<CartItemProps> = ({
 
   const increaseCartItemHandler = () => {
     dispatch(
-      addCartItem({ id, size, typeName, price, title, imageUrl, countPerType })
+      addCartItem({
+        id,
+        size,
+        typeName,
+        price,
+        title,
+        imageUrl,
+        pizzaCountUniqueType,
+      })
     );
   };
 
@@ -41,7 +49,7 @@ const CartItem: React.FC<CartItemProps> = ({
         price,
         title,
         imageUrl,
-        countPerType,
+        pizzaCountUniqueType,
       })
     );
   };
@@ -66,7 +74,7 @@ const CartItem: React.FC<CartItemProps> = ({
         >
           <MinusSvg />
         </div>
-        <b>{countPerType}</b>
+        <b>{pizzaCountUniqueType}</b>
         <div
           onClick={increaseCartItemHandler}
           className="button button--outline button--circle cart__item-count-plus"
@@ -75,7 +83,7 @@ const CartItem: React.FC<CartItemProps> = ({
         </div>
       </div>
       <div className="cart__item-price">
-        <b>{price * countPerType} ₽</b>
+        <b>{price * pizzaCountUniqueType} ₽</b>
       </div>
       <div className="cart__item-remove">
         <div className="button button--outline button--circle">

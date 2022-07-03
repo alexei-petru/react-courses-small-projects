@@ -38,4 +38,4 @@ const Categories: React.FC<CategoriesProps> = ({
   );
 };
 
-export default Categories;
+export default React.memo(Categories);

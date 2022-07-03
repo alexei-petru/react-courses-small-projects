@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import CartSvg from "../assets/CartSvg";
@@ -6,9 +7,23 @@ import { RootState } from "../Redux/store";
 import Search from "./Search/Search";
 
 const Header = () => {
-  const { totalItemsCount, totalSum } = useSelector(
+  const isFirstRenderDone = useRef(false);
+  const { totalItemsCount, totalSum, items, countPerPizzaBlock } = useSelector(
     (state: RootState) => state.cartReducer
   );
+
+  useEffect(() => {
+    if (isFirstRenderDone.current) {
+      const dataString = JSON.stringify({
+        items,
+        totalSum,
+        totalItemsCount,
+        countPerPizzaBlock,
+      });
+      localStorage.setItem("cart", dataString);
+    }
+    isFirstRenderDone.current = true;
+  }, [items]);
 
   const location = useLocation();
 
