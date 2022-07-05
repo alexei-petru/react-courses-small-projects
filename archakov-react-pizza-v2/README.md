@@ -5,7 +5,7 @@ Axios
 TypeScript
 react-content-loader
 React Paginate 
-etc
+etc.
 
 # features to add
 
