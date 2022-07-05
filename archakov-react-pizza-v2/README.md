@@ -1,3 +1,12 @@
+Pizza shop writed in React with:
+Redux-toolkit
+React-Router
+Axios
+TypeScript
+react-content-loader
+React Paginate 
+etc
+
 # features to add
 
 `add user login`
