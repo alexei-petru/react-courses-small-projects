@@ -1,6 +1,10 @@
 # features to add
 
-`need to fix fetching from parsed url`
+`add user login`
+`fix cart item delete function`
+`use clx for cart buttons`
+`improve item page`
+`add user order map and credentials`
 
 
 
@@ -17,17 +21,6 @@
 `useRef<SpanInputElement>(null)  --can be null or SpanI....` 
 `type SortListType = {}`
 `@ts-ignore for ignoring temporarily ts checking on this values`)
-
-
-<!-- 
-`hide button on cart page with useLocation router-dom hook`
-`create page for individual menu item and make it dinamic offcourse `
-`hook useParams give values from url dinamic values`
-`booth useParams and useLocation make the component rerender when values has changed`
-`outlet to change only dinamic content ` -->
-
-
-
 
 
 //////////////////////////////////////////////////////////////
