@@ -1,6 +1,6 @@
 import qs from "qs";
 import { useCallback, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Categories from "../components/Categories";
 import Pagination from "../components/Pagination/Pagination";
@@ -140,10 +140,9 @@ const Home: React.FC = () => {
           activeCategory={activeCategory || "0"}
           onChangeCategory={changeCategoryHandler}
         />
-        {/* @ts-ignore */}
         <Sort sort={sort} onChangeSort={changeSortHandler} />
       </div>
-      <h2 className="content__title">Bce пиццы</h2>
+      <h2 className="content__title">All pizzas</h2>
       <div className="content__items">
         {status === "pending" &&
           [...Array(6)].map((_, index) => <Skeleton key={index} />)}

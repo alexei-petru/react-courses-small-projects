@@ -17,7 +17,7 @@ const initialState: filterSliceState = {
   pizzaSearch: "",
   activeCategory: "0",
   sort: {
-    name: "популярности (ASC)",
+    name: "Popularity (ASC)",
     sortProperty: "rating",
   },
   selectedPage: 1,

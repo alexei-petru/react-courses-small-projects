@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import MinusSvg from "../assets/MinusSvg";
 import PlusSvg from "../assets/PlusSvg";
 import { addCartItem, decreaseCartItem } from "../Redux/slices/cartSlice";
+import { currentCurrency } from "../variables/variables";
 
 type CartItemProps = {
   id: string;
@@ -83,7 +84,9 @@ const CartItem: React.FC<CartItemProps> = ({
         </div>
       </div>
       <div className="cart__item-price">
-        <b>{price * pizzaCountUniqueType} ₽</b>
+        <b>
+          {price * pizzaCountUniqueType} {currentCurrency}
+        </b>
       </div>
       <div className="cart__item-remove">
         <div className="button button--outline button--circle">

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { addCartItem } from "../../Redux/slices/cartSlice";
 import { RootState } from "../../Redux/store";
+import { currentCurrency } from "../../variables/variables";
 
 type PizzaBlockProps = {
   id: string;
@@ -19,7 +20,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
   price,
   sizes,
 }) => {
-  const typeNames = ["тонкое", "традиционное"];
+  const typeNames = ["thin", "traditional"];
   const [activeType, setActiveType] = useState(typeNames[0]);
   const [activeSize, setActiveSize] = useState(sizes[0]);
 
@@ -73,7 +74,10 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {price} ₽</div>
+        <div className="pizza-block__price">
+          from {price}
+          {currentCurrency}
+        </div>
         <div
           onClick={addItemToCartHandler}
           className="button button--outline button--add"
@@ -90,7 +94,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({
               fill="white"
             />
           </svg>
-          <span>Добавить</span>
+          <span>Add</span>
           {countPerId && <i>{countPerId}</i>}
         </div>
       </div>

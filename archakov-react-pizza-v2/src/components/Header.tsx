@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import CartSvg from "../assets/CartSvg";
 import pizzaLogo from "../assets/pizza-logo.svg";
 import { RootState } from "../Redux/store";
+import { currentCurrency } from "../variables/variables";
 import Search from "./Search/Search";
 
 const Header = () => {
@@ -36,14 +37,17 @@ const Header = () => {
           </Link>
           <div>
             <h1>React Pizza</h1>
-            <p>самая вкусная пицца во вселенной</p>
+            <p>best pizza in the world</p>
           </div>
           <Search />
         </div>
         <div className="header__cart">
           {location.pathname !== "/cart" && (
             <Link to="cart" className="button button--cart">
-              <span>{totalSum} ₽</span>
+              <span>
+                {totalSum}
+                {currentCurrency}
+              </span>
               <div className="button__delimiter"></div>
               <CartSvg />
               <span>{totalItemsCount}</span>

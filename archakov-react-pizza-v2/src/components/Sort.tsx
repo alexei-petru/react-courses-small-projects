@@ -4,12 +4,12 @@ import { useEffect } from "react";
 import { SortItemType } from "../Redux/slices/filterSlice";
 
 export const sortList: SortItemType[] = [
-  { name: "популярности (ASC)", sortProperty: "rating" },
-  { name: "популярности (DESC)", sortProperty: "-rating" },
-  { name: "цене (ASC)", sortProperty: "price" },
-  { name: "цене (DESC)", sortProperty: "-price" },
-  { name: "алфавиту (ASC)", sortProperty: "title" },
-  { name: "алфавиту (DESC)", sortProperty: "-title" },
+  { name: "Popularity (ASC)", sortProperty: "rating" },
+  { name: "Popularity (DESC)", sortProperty: "-rating" },
+  { name: "Price (ASC)", sortProperty: "price" },
+  { name: "Price (DESC)", sortProperty: "-price" },
+  { name: "name (ASC)", sortProperty: "title" },
+  { name: "name (DESC)", sortProperty: "-title" },
 ];
 
 type SortProps = {
@@ -55,7 +55,7 @@ const Sort: React.FC<SortProps> = ({ sort, onChangeSort }) => {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
+        <b>Sort by:</b>
         <span>{sort.name}</span>
       </div>
       {isSortOpen && (

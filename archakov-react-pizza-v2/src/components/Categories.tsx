@@ -10,12 +10,12 @@ const Categories: React.FC<CategoriesProps> = ({
   onChangeCategory,
 }) => {
   const categoriesNames = [
-    "Все",
-    "Мясные",
-    "Вегетарианская",
-    "Гриль",
-    "Острые",
-    "Закрытые",
+    "All",
+    "Meat",
+    "Vegetarian",
+    "Gril",
+    "Hot",
+    "Closed",
   ];
   return (
     <div className="categories">

@@ -5,6 +5,7 @@ import TrashSvg from "../assets/TrashSvg";
 import CartItem from "../components/CartItem";
 import { clearCart } from "../Redux/slices/cartSlice";
 import { RootState } from "../Redux/store";
+import { currentCurrency } from "../variables/variables";
 
 const Cart = () => {
   const { totalItemsCount, totalSum, items } = useSelector(
@@ -22,11 +23,11 @@ const Cart = () => {
         <div className="cart__top">
           <h2 className="content__title">
             <CartSvg />
-            Корзина
+            Cart
           </h2>
           <div onClick={clearCartHandler} className="cart__clear">
             <TrashSvg />
-            <span>Очистить корзину</span>
+            <span>Clear Cart</span>
           </div>
         </div>
         <div className="cart__content__items">
@@ -40,10 +41,10 @@ const Cart = () => {
         <div className="cart__bottom">
           <div className="cart__bottom-details">
             <span>
-              Всего пицц: <b>{totalItemsCount} шт.</b>
+              Total pizzas: <b>{totalItemsCount} pcs.</b>
             </span>
             <span>
-              Сумма заказа: <b>{totalSum} ₽</b>
+              Total Sum: <b>{totalSum}{currentCurrency}</b>
             </span>
           </div>
           <div className="cart__bottom-buttons">
@@ -52,10 +53,10 @@ const Cart = () => {
               className="button button--outline button--add go-back-btn"
             >
               <ArrowLeftSvg />
-              <span>Вернуться назад</span>
+              <span>Back</span>
             </a>
             <div className="button pay-btn">
-              <span>Оплатить сейчас</span>
+              <span>Pay now</span>
             </div>
           </div>
         </div>
