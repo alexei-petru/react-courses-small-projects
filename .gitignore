@@ -8,3 +8,4 @@ x-github-projects-source-code
 node_modules
 .pnp
 .pnp.js
+.env

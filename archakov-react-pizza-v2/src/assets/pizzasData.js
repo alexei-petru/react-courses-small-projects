@@ -34,7 +34,7 @@
   {
    "id": "2",
    "imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/6652fec1-04df-49d8-8744-232f1032c44b.jpg",
-   "title": "Chiken Barbekue",
+   "title": "Chiken Barbeque",
    "types": [
     0
    ],
@@ -65,7 +65,7 @@
   {
    "id": "4",
    "imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg",
-   "title": "Cheesburger pizza",
+   "title": "CheesBurger pizza",
    "types": [
     0,
     1
@@ -163,7 +163,6 @@
    "rating": 7
   }
  ]
-
 
 ////// ///////////////////copy//////////////
 

@@ -1,22 +1,12 @@
 import React, { FunctionComponent } from "react";
 import { userType } from "../App";
 
-// Create the Label React component​​​​​​‌​​‌​​‌​​​​​‌‌‌​​‌​‌‌‌‌‌‌ here
+const users: userType[] = [
+  { firstName: "Ada", lastName: "Cardinal" },
+  { firstName: "Ada", lastName: "Brown" },
+];
 
-// const User: FunctionComponent<userType> = ({ user }) => {
-//   console.log("user", user);
-//   return (
-//     <li>
-//       {user.firstName} {user.lastName}
-//     </li>
-//   );
-// };
-
-export type userProps = {
-  users: userType[];
-};
-
-const TestComponent = ({ users }: userProps) => {
+const UsersArray = () => {
   console.log(users);
   const sortedUsers = [...users];
   sortedUsers.sort((user1, user2) => {
@@ -40,4 +30,4 @@ const TestComponent = ({ users }: userProps) => {
   );
 };
 
-export default TestComponent;
+export default UsersArray;
