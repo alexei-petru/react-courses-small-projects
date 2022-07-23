@@ -1,0 +1,10 @@
+.sort {
+  display: flex;
+  flex-direction: row;
+  background-color: rgb(180, 194, 251);
+  margin-bottom: 10px;
+}
+
+.pizza-menu-wrapper *{
+  font-size: 19px;
+}
