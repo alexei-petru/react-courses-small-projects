@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import classes from "./PizzaMenu.module.css";
 import { db } from "../../firebase-config";
 import {
@@ -16,6 +16,8 @@ import {
 } from "firebase/firestore";
 import { localPizzaArray } from "../../assets/pizzas/localPizzaArray";
 import { useAddRemoveFirebase } from "../../helpers/useAddRemoveFirebase";
+import PizzaList from "./PizzaList";
+import Pagination from "./Pagination";
 
 const pizzaCollection = collection(db, "pizzas-menu");
 const filterList = [
@@ -47,7 +49,7 @@ const filterList = [
 const sortList = ["title", "price", "rating"];
 
 const PizzaMenu = () => {
-  const [pizzasArray, setPizzaArray] = useState([]);
+  const [pizzasArray, setPizzasArray] = useState([]);
   const [filterOptions, setFilterOptions] = useState({
     key: null,
     comparation: null,
@@ -59,7 +61,9 @@ const PizzaMenu = () => {
   });
   const [isLoading, setIsLoading] = useState(true);
   const limitPageItems = 4;
-  const [lastItemState, setLastItemState] = useState(0);
+  // const [lastItemState, setLastItemState] = useState(0);
+  const lastItemRef = useRef();
+  const firstItemRef = useRef();
 
   useEffect(() => {
     const getQuerrySnapshot = async () => {
@@ -81,19 +85,22 @@ const PizzaMenu = () => {
           : query(
               pizzaCollection,
               orderBy("title"),
-              startAfter(lastItemState),
+              // startAfter(),
               limit(limitPageItems)
             );
 
       const documentSnapshot = await getDocs(queryConditionOrCollection);
       const lastItemSnapshot =
         documentSnapshot.docs[documentSnapshot.docs.length - 1];
-      setLastItemState(lastItemSnapshot);
-      console.log("lastItem", lastItemSnapshot);
+      const firstItemSnapshot = documentSnapshot.docs[0];
+      lastItemRef.current = lastItemSnapshot;
+      firstItemRef.current = firstItemSnapshot;
+      console.log("lastItem", lastItemRef.current.data());
+      console.log("firstItem", firstItemRef.current.data());
 
       const responseData = documentSnapshot.docs.map((item) => item.data());
       setIsLoading(false);
-      setPizzaArray(responseData);
+      setPizzasArray(responseData);
     };
     getQuerrySnapshot();
   }, [filterOptions]);
@@ -102,12 +109,6 @@ const PizzaMenu = () => {
     const filterObj = filterList.find((filterObj) => filterObj.name === option);
     filterObj && setFilterOptions(filterObj);
   };
-  const pizzaList = pizzasArray.map((itemObj, i) => (
-    <p key={itemObj.id}>{`${i + 1}-${itemObj.title}; Price:${
-      itemObj.price
-    }; Rating:${itemObj.rating}; `}</p>
-  ));
-
   return (
     <div className={`${classes["pizza-menu-wrapper"]} container`}>
       <div className={classes.sort}>
@@ -159,11 +160,13 @@ const PizzaMenu = () => {
       </div>
       <div>
         {isLoading && <p>...Loading</p>}
-        {pizzasArray.length !== 0 && !isLoading && pizzaList}
+        {pizzasArray.length !== 0 && !isLoading && (
+          <PizzaList pizzasArray={pizzasArray} />
+        )}
+        {pizzasArray.length !== 0 && !isLoading && <Pagination />}
         {!isLoading && !pizzasArray.length && <p>No pizzas has been found</p>}
       </div>
     </div>
   );
 };
-
 export default PizzaMenu;

@@ -1,0 +1,11 @@
+.pagination button {
+  padding: 10px;
+}
+
+.pagination button:nth-child(1) {
+    background-color: rgb(221, 217, 217);
+}
+
+.pagination button:nth-child(2) {
+    background-color: rgb(255, 195, 149);
+}
