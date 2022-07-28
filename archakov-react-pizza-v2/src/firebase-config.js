@@ -11,6 +11,5 @@ const firebaseConfig = {
   measurementId: process.env.REACT_PIZZA_APP_MESSAGING_MEASUREMENT_ID,
 };
 
-
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);

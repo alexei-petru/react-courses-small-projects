@@ -60,47 +60,30 @@ const PizzaMenu = () => {
     order: "asc",
   });
   const [isLoading, setIsLoading] = useState(true);
-  const limitPageItems = 4;
-  // const [lastItemState, setLastItemState] = useState(0);
-  const lastItemRef = useRef();
-  const firstItemRef = useRef();
+  const queryLimit = 100;
 
   useEffect(() => {
     const getQuerrySnapshot = async () => {
       setIsLoading(true);
-      const queryConditionOrCollection =
-        filterOptions.key !== null
-          ? query(
-              pizzaCollection,
-              where(
-                filterOptions.key,
-                filterOptions.comparation,
-                filterOptions.value
-              ),
-              orderBy(
-                filterOptions.key === "keywords" ? "title" : filterOptions.key
-              ),
-              limit(limitPageItems)
-            )
-          : query(
-              pizzaCollection,
-              orderBy("title"),
-              // startAfter(),
-              limit(limitPageItems)
-            );
-
+      const queryConditionOrCollection = query(
+        pizzaCollection,
+        where(
+          filterOptions.key ? filterOptions.key : "title",
+          filterOptions.comparation ? filterOptions.comparation : "!=",
+          filterOptions.value ? filterOptions.value : ""
+        ),
+        orderBy(
+          filterOptions.key === "keywords" || filterOptions.key === null
+            ? "title"
+            : filterOptions.key
+        ),
+        limit(queryLimit)
+      );
       const documentSnapshot = await getDocs(queryConditionOrCollection);
-      const lastItemSnapshot =
-        documentSnapshot.docs[documentSnapshot.docs.length - 1];
-      const firstItemSnapshot = documentSnapshot.docs[0];
-      lastItemRef.current = lastItemSnapshot;
-      firstItemRef.current = firstItemSnapshot;
-      console.log("lastItem", lastItemRef.current.data());
-      console.log("firstItem", firstItemRef.current.data());
-
       const responseData = documentSnapshot.docs.map((item) => item.data());
       setIsLoading(false);
       setPizzasArray(responseData);
+      console.log("responseData", responseData);
     };
     getQuerrySnapshot();
   }, [filterOptions]);

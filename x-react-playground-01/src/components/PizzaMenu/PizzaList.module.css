@@ -1,0 +1,21 @@
+.pizzas-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 90%;
+  gap: 7px;
+  margin: 0 auto;
+}
+.pizza-wrapper {
+  margin-bottom: 10px;
+  border: 2px solid rgb(176, 52, 242);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+}
+
+.pizza-wrapper img {
+  width: 100px;
+  height: auto;
+}
