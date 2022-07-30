@@ -8,6 +8,7 @@ import ClassBasedUsersFinder from "./components/ClassBasedComponents/ClassBasedU
 import HttpRequests from "./components/HttpRequests/HttpRequests";
 import DateProvider from "./store/date/DateProvider";
 import PizzaMenu from "./components/PizzaMenu/PizzaMenu";
+import RandomMovie from "./components/RandomMovie/RandomMovie";
 
 export type userType = {
   firstName: string;
@@ -17,8 +18,8 @@ export type userType = {
 const App = () => {
   return (
     <div className={classes.container}>
-      <PizzaMenu />
-      {/* <UsersArray/>
+      {/* <PizzaMenu /> */}
+      {/* <UsersArray />
       <DateProvider>
         <HttpRequests />
       </DateProvider>
@@ -27,6 +28,7 @@ const App = () => {
       </CounterProvider>
       <ReevAndRerendering />
       <ClassBasedUsersFinder /> */}
+      <RandomMovie />
     </div>
   );
 };

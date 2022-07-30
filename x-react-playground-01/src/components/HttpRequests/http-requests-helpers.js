@@ -1,5 +1,5 @@
 const getAsteroidAPIArray = async (startDate, endDate) => {
-  const ApiKey = "XDujIISECRZoDgjNy2xU4w6AkxzotNpgiZRuCRtd";
+  const ApiKey = process.env.REACT_APP_ASTEROIDS_KEY;
   //date-format"YYYY-MM-DD";
 
   const closestAsteroidsApi = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${startDate}&end_date=${endDate}&api_key=${ApiKey}`;
@@ -11,14 +11,6 @@ const getAsteroidAPIArray = async (startDate, endDate) => {
   return daysArrays;
 };
 
-export const compareDaysArrayFromAPI = async (startDate, endDate) => {
-  return (await getAsteroidAPIArray(startDate, endDate)).sort(
-    (firstArr, secondArr) => {
-      return firstArr[0].localeCompare(secondArr[0]);
-    }
-  );
-};
-
 export const getTodayISOFormatedDate = (numberOrEmpty) => {
   let day;
   if (Number.isInteger(numberOrEmpty)) {
@@ -27,6 +19,14 @@ export const getTodayISOFormatedDate = (numberOrEmpty) => {
     day = new Date();
   }
   return day.toISOString().slice(0, 10);
+};
+
+export const compareDaysArrayFromAPI = async (startDate, endDate) => {
+  return (await getAsteroidAPIArray(startDate, endDate)).sort(
+    (firstArr, secondArr) => {
+      return firstArr[0].localeCompare(secondArr[0]);
+    }
+  );
 };
 
 export const isDatesRangeValid = (startDate, endDate, type) => {

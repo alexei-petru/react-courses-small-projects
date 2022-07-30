@@ -34,6 +34,7 @@ const HttpRequests = () => {
     try {
       const daysArrays = await getDaysArrayFromAPIHandler();
       if (daysArrays.length > 0) {
+        console.log("daysArrays", daysArrays);
         setDaysArrayState(daysArrays);
       } else if (!daysArrays.length) {
         setIsArrayEmpty(true);
