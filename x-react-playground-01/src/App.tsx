@@ -19,7 +19,7 @@ const App = () => {
   return (
     <div className={classes.container}>
       {/* <PizzaMenu /> */}
-      {/* <UsersArray />
+      <UsersArray />
       <DateProvider>
         <HttpRequests />
       </DateProvider>
@@ -27,8 +27,8 @@ const App = () => {
         <Counter />
       </CounterProvider>
       <ReevAndRerendering />
-      <ClassBasedUsersFinder /> */}
-      <RandomMovie />
+      <ClassBasedUsersFinder />
+      {/* <RandomMovie /> */}
     </div>
   );
 };
