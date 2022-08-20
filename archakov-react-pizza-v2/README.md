@@ -1,4 +1,4 @@
-`Pizza shop writed in React with:`
+## Pizza shop writed in React with:
 `Redux-toolkit`
 `React-Router`
 `Axios`
@@ -7,7 +7,7 @@
 `React Paginate `
 `etc.`
 
-# features to add
+### features to add
 
 `add user login`
 `fix cart item delete function`
@@ -18,7 +18,7 @@
 
 
 //////////////////////////////////////////////////////////////
-## mby future
+### mby future
 `debounce with lodash and without it` npm i lodash.debounce
 
 
